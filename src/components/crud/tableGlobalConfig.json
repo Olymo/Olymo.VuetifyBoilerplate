@@ -1,0 +1,3 @@
+{
+  "headersToExclude": ["id", "Id", "ID"]
+}
