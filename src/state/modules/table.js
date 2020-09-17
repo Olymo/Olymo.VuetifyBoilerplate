@@ -22,10 +22,10 @@ function buildQueryString(state) {
 
     if (state.serverSidePaging.sorts.length) {
       qs +=
-        '&sortBy' +
+        '&sortBy=' +
         state.serverSidePaging.sorts[0].sortBy +
         '.' +
-        state.sorts[0].direction
+        state.serverSidePaging.sorts[0].direction
       for (let i = 1; i < state.serverSidePaging.sorts.length; i++) {
         qs +=
           ',' +
@@ -104,8 +104,10 @@ const mutations = {
     state.specializedColumns = specializedColumns
   },
   changePagingdata(state, pagingData) {
+    console.log(pagingData)
     state.serverSidePaging.currentPage = pagingData.currentPage
     state.serverSidePaging.perPage = pagingData.perPage
+    state.serverSidePaging.sorts = pagingData.sorts
   },
 }
 
