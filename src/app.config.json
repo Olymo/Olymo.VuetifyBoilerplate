@@ -1,4 +1,25 @@
 {
   "title": "Vue Boilerplate",
-  "desription": "Vue Boilerplate 2020"
+  "desription": "Vue Boilerplate 2020",
+  "genericTableDefaults": {
+    "apiSettings": {
+      "endpoint": null,
+      "method": "GET",
+      "paging": null,
+      "serverSidePaging": false,
+      "pagingOptions": {
+        "perPageProperty": "perPage",
+        "currentPageProperty": "page",
+        "dataProperty": "items",
+        "paginateQueryInstruction": "paginate=true",
+        "serverSideItemsLength": "totalCount"
+      }
+    },
+    "serverSidePaging": {
+      "itemsLength": 0,
+      "currentPage": 1,
+      "perPage": 10,
+      "sorts": []
+    }
+  }
 }

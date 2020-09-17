@@ -1,15 +1,16 @@
 <template>
   <v-row class="container">
-    <v-col cols="8">
-      <v-data-table :items="data" :headers="headers">
+    <v-col cols="10">
+      <v-data-table
+        :items="data"
+        :headers="headers"
+        :server-items-length="serverSidePaging.itemsLength"
+        :options.sync="options"
+        :multi-sort="true"
+      >
         <template v-slot:item.image="{ item }">
           <div class="p-2">
-            <v-img
-              :src="item.image"
-              :alt="item.name"
-              height="100px"
-              width="100px"
-            ></v-img>
+            <v-img :src="item.image" :alt="item.name" width="100"></v-img>
           </div>
         </template>
       </v-data-table>
@@ -27,10 +28,11 @@ export default {
   data: function() {
     return {
       config: config,
+      options: {},
     }
   },
   computed: {
-    ...mapState('table', ['data']),
+    ...mapState('table', ['data', 'serverSidePaging']),
     headers: function() {
       let headers = []
 
@@ -52,10 +54,7 @@ export default {
     },
   },
   mounted: function() {
-    this.$store.dispatch('table/setApiSettings', {
-      endpoint: this.endpoint,
-      method: this.method,
-    })
+    this.$store.dispatch('table/setApiSettings', this.apiSettings)
     this.$store.dispatch('table/setSpecializedColumns', this.specializedColumns)
     this.$store.dispatch('table/getFromApi')
   },
@@ -79,6 +78,34 @@ export default {
       } else {
         this.columnWidth = 'auto'
       }
+    },
+  },
+  watch: {
+    options: {
+      handler() {
+        let sorts = []
+        console.log(this.options)
+        if (this.$store) {
+          if (this.options.sortBy.length) {
+            for (let i = 0; i < this.options.sortBy.length; i++) {
+              sorts.push({
+                sortBy: this.options.sortBy[i],
+                direction: this.options.sortDesc[i] ? 'desc' : 'asc',
+              })
+            }
+          }
+
+          this.$store
+            .dispatch('table/changePagingData', {
+              perPage: this.options.itemsPerPage,
+              currentPage: this.options.page,
+              sorts: sorts,
+            })
+            .then(() => {
+              this.$store.dispatch('table/getFromApi')
+            })
+        }
+      },
     },
   },
 }

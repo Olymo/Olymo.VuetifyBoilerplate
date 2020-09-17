@@ -1,13 +1,42 @@
 import axios from 'axios'
+import settings from '../../app.config.json'
 
 const state = () => ({
   data: [],
-  apiSettings: {
-    endpoint: null,
-    method: 'GET',
-  },
+  apiSettings: settings.genericTableDefaults.apiSettings,
   specializedColumns: [],
+  serverSidePaging: settings.genericTableDefaults.serverSidePaging,
 })
+
+function buildQueryString(state) {
+  var qs = '?'
+  if (state.serverSidePaging) {
+    let paging = state.apiSettings.pagingOptions
+    qs += paging.paginateQueryInstruction
+    qs += '&' + paging.perPageProperty + '=' + state.serverSidePaging.perPage
+    qs +=
+      '&' +
+      paging.currentPageProperty +
+      '=' +
+      state.serverSidePaging.currentPage
+
+    if (state.serverSidePaging.sorts.length) {
+      qs +=
+        '&sortBy' +
+        state.serverSidePaging.sorts[0].sortBy +
+        '.' +
+        state.sorts[0].direction
+      for (let i = 1; i < state.serverSidePaging.sorts.length; i++) {
+        qs +=
+          ',' +
+          state.serverSidePaging.sorts[i].sortBy +
+          '.' +
+          state.serverSidePaging.sorts[i].direction
+      }
+    }
+  }
+  return qs
+}
 
 const getters = {}
 
@@ -15,34 +44,7 @@ const actions = {
   getFromApi({ commit, state }) {
     if (state.apiSettings.method == 'GET') {
       axios
-        .post(state.apiSettings.endpoint, {
-          type: 'object',
-          properties: {
-            id: {
-              type: 'string',
-              ipsum: 'id',
-            },
-            name: {
-              type: 'string',
-              ipsum: 'name',
-            },
-            email: {
-              type: 'string',
-              format: 'email',
-            },
-            bio: {
-              type: 'string',
-              ipsum: 'sentence',
-            },
-            age: {
-              type: 'integer',
-            },
-            avatar: {
-              type: 'string',
-              ipsum: 'small image',
-            },
-          },
-        })
+        .get(state.apiSettings.endpoint + buildQueryString(state))
         .then((response) => {
           commit('setData', response)
         })
@@ -54,12 +56,26 @@ const actions = {
   setSpecializedColumns({ commit }, specializedColumns) {
     commit('setSpecializedColumns', specializedColumns)
   },
+  changePagingData({ commit }, pagingData) {
+    commit('changePagingdata', pagingData)
+  },
 }
 
 const mutations = {
-  setData(state, data) {
+  setData(state, response) {
+    let dataItems = []
+    if (state.apiSettings.serverSidePaging) {
+      dataItems = response.data[state.apiSettings.pagingOptions.dataProperty]
+      const paging = state.apiSettings.pagingOptions
+      state.serverSidePaging.itemsLength =
+        response.data[paging.serverSideItemsLength]
+      state.currentPage = response.data[paging.currentPageProperty]
+      state.perPage = response.data[paging.perPageProperty]
+    } else {
+      dataItems = response.data
+    }
     if (state.specializedColumns.length) {
-      data.data.forEach((dataItem) => {
+      dataItems.forEach((dataItem) => {
         for (let column of state.specializedColumns) {
           if (Object.keys(dataItem).includes(column.column)) {
             dataItem[column.type] = dataItem[column.column]
@@ -68,13 +84,28 @@ const mutations = {
         }
       })
     }
-    state.data = data.data
+    state.data = dataItems
   },
   setSettings(state, settings) {
     state.apiSettings = settings
+    if (settings.serverSidePaging) {
+      if (!settings.pagingOptions) {
+        state.apiSettings.pagingOptions = {
+          perPageProperty: 'perPage',
+          currentPageProperty: 'page',
+          dataProperty: 'items',
+          paginateQueryInstruction: 'paginate=true',
+          serverSideItemsLength: 'totalCount',
+        }
+      }
+    }
   },
   setSpecializedColumns(state, specializedColumns) {
     state.specializedColumns = specializedColumns
+  },
+  changePagingdata(state, pagingData) {
+    state.serverSidePaging.currentPage = pagingData.currentPage
+    state.serverSidePaging.perPage = pagingData.perPage
   },
 }
 

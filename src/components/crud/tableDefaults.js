@@ -1,9 +1,8 @@
 export default {
   props: {
-    endpoint: String,
-    method: {
-      type: String,
-      default: 'GET',
+    apiSettings: {
+      type: Object,
+      required: true,
     },
     columnWidth: String | Number,
     tableHeaders: Array,
@@ -17,16 +16,6 @@ export default {
       type: Array,
       default: function() {
         return []
-      },
-    },
-    serverSideOptions: {
-      type: Object,
-      default: function() {
-        return {
-          dataProperty: 'Items',
-          perPageProperty: 'PerPage',
-          currentPageProperty: 'CurrentPage',
-        }
       },
     },
   },

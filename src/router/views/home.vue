@@ -14,10 +14,15 @@ export default {
       toExclude: ['userId'],
       specialized: [
         {
-          column: 'avatar',
+          column: 'picture',
           type: 'image',
         },
       ],
+      apiSettings: {
+        endpoint: 'http://localhost:5000/api/products',
+        method: 'GET',
+        serverSidePaging: true,
+      },
     }
   },
 }
@@ -26,10 +31,10 @@ export default {
 <template>
   <Layout>
     <Table
-      endpoint="http://schematic-ipsum.herokuapp.com?n=50"
+      :apiSettings="apiSettings"
       :headersToExclude="toExclude"
       :specializedColumns="specialized"
-      columnWidth="fit"
+      columnWidth="auto"
     />
   </Layout>
 </template>
