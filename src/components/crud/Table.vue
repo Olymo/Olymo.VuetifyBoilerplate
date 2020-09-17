@@ -15,7 +15,9 @@
         </template>
       </v-data-table>
     </v-col>
-    <v-col>Filteri</v-col>
+    <v-col>
+      <TableFilters :formElements="formElements" />
+    </v-col>
   </v-row>
 </template>
 <script>
@@ -23,7 +25,9 @@ import { mapState } from 'vuex'
 import tableDefaults from './tableDefaults'
 import config from './tableGlobalConfig.json'
 import pixelWidth from 'string-pixel-width'
+import TableFilters from './TableFilters.vue'
 export default {
+  components: { TableFilters },
   props: tableDefaults.props,
   data: function() {
     return {

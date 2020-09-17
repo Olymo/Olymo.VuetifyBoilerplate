@@ -6,6 +6,7 @@ const state = () => ({
   apiSettings: settings.genericTableDefaults.apiSettings,
   specializedColumns: [],
   serverSidePaging: settings.genericTableDefaults.serverSidePaging,
+  queryObject: {},
 })
 
 function buildQueryString(state) {
@@ -35,6 +36,18 @@ function buildQueryString(state) {
       }
     }
   }
+
+  for (let prop in state.queryObject) {
+    //We're skipping query string parameter entirely if queryObject has no value for that property
+    if (!state.queryObject[prop]) {
+      continue
+    }
+    if (qs != '?') {
+      qs += '&'
+    }
+    qs += prop + '=' + state.queryObject[prop]
+  }
+
   return qs
 }
 
@@ -58,6 +71,9 @@ const actions = {
   },
   changePagingData({ commit }, pagingData) {
     commit('changePagingdata', pagingData)
+  },
+  setQueryObject({ commit }, queryObject) {
+    commit('setQueryObject', queryObject)
   },
 }
 
@@ -104,10 +120,12 @@ const mutations = {
     state.specializedColumns = specializedColumns
   },
   changePagingdata(state, pagingData) {
-    console.log(pagingData)
     state.serverSidePaging.currentPage = pagingData.currentPage
     state.serverSidePaging.perPage = pagingData.perPage
     state.serverSidePaging.sorts = pagingData.sorts
+  },
+  setQueryObject(state, queryObject) {
+    state.queryObject = queryObject
   },
 }
 
