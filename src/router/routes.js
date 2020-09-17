@@ -7,6 +7,11 @@ export default [
     component: () => lazyLoadView(import('@views/home.vue')),
   },
   {
+    path: '/insert',
+    name: 'insert',
+    component: () => lazyLoadView(import('@views/create.vue')),
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => lazyLoadView(import('@views/login.vue')),

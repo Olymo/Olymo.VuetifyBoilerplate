@@ -39,7 +39,7 @@ function buildQueryString(state) {
 
   for (let prop in state.queryObject) {
     //We're skipping query string parameter entirely if queryObject has no value for that property
-    if (!state.queryObject[prop]) {
+    if (!state.queryObject[prop] && state.queryObject[prop] !== false) {
       continue
     }
     if (qs != '?') {
