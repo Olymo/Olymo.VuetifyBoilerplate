@@ -1,38 +1,59 @@
 <template>
   <div>
-    <h1>Filters:</h1>
-    <template v-for="formElement in formElements">
-      <component
-        :is="formElement.component"
-        v-bind:key="formElement.key"
-        :label="label(formElement)"
-        :type="type(formElement)"
-        :items="dataSource(formElement)"
-        outlined
-        v-model="queryObject[formElement.key]"
-        dense
-      />
-    </template>
-    <v-btn small @click="handleSearch">Search</v-btn>
+    <ValidationObserver ref="observer">
+      <template v-for="formElement in formElements">
+        <ValidationProvider
+          v-slot="{ errors }"
+          :name="formElement.key"
+          :rules="rules(formElement)"
+          :key="formElement.key"
+        >
+          <component
+            :is="formElement.component"
+            v-bind:key="formElement.key"
+            :label="label(formElement)"
+            :type="type(formElement)"
+            :items="dataSource(formElement)"
+            outlined
+            :error-messages="errors"
+            v-model="formObject[formElement.key]"
+            dense
+          />
+        </ValidationProvider>
+      </template>
+    </ValidationObserver>
+    <v-btn small @click="submit">Submit</v-btn>
   </div>
 </template>
 <script>
 import $ from 'jquery'
+import {
+  ValidationProvider,
+  ValidationObserver,
+} from 'vee-validate/dist/vee-validate.full'
 export default {
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   props: {
     formElements: {
       type: Array,
       required: true,
     },
+    handleSubmit: {
+      type: Function,
+      required: true,
+    },
   },
   data: function() {
     return {
-      queryObject: {},
+      formObject: {},
     }
   },
   mounted: function() {
     for (let el of this.formElements) {
-      this.queryObject[el.key] = ''
+      this.formObject[el.key] = ''
     }
   },
   methods: {
@@ -62,6 +83,12 @@ export default {
       let items = this.loadDataSourceFromApi(formElement.api)
 
       return items
+    },
+    rules: function(formElement) {
+      if (formElement.validation) {
+        return formElement.validation
+      }
+      return ''
     },
     shouldContainDataSource(formElement) {
       let elementsWithDataSource = ['v-autocomplete', 'v-select']
@@ -93,9 +120,12 @@ export default {
       var result = text.replace(/([A-Z])/g, ' $1')
       return result.charAt(0).toUpperCase() + result.slice(1)
     },
-    handleSearch: function() {
-      this.$store.dispatch('table/setQueryObject', this.queryObject)
-      this.$store.dispatch('table/getFromApi')
+    submit() {
+      this.$refs.observer.validate().then((valid) => {
+        if (valid) {
+          this.handleSubmit(this.formObject)
+        }
+      })
     },
   },
 }

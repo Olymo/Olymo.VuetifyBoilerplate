@@ -16,7 +16,7 @@
       </v-data-table>
     </v-col>
     <v-col>
-      <TableFilters :formElements="formElements" />
+      <FormBuilder :formElements="formElements" :handleSubmit="handleSearch" />
     </v-col>
   </v-row>
 </template>
@@ -25,9 +25,9 @@ import { mapState } from 'vuex'
 import tableDefaults from './tableDefaults'
 import config from './tableGlobalConfig.json'
 import pixelWidth from 'string-pixel-width'
-import TableFilters from './TableFilters.vue'
+import FormBuilder from './FormBuilder.vue'
 export default {
-  components: { TableFilters },
+  components: { FormBuilder },
   props: tableDefaults.props,
   data: function() {
     return {
@@ -82,6 +82,10 @@ export default {
       } else {
         this.columnWidth = 'auto'
       }
+    },
+    handleSearch: function(formObject) {
+      this.$store.dispatch('table/setQueryObject', formObject)
+      this.$store.dispatch('table/getFromApi')
     },
   },
   watch: {

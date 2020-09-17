@@ -20,6 +20,7 @@
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "string-pixel-width": "^1.10.0",
+    "vee-validate": "^3.3.11",
     "vue": "^2.6.11",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.4.3",

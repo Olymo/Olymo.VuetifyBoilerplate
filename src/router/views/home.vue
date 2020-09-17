@@ -27,6 +27,7 @@ export default {
         {
           component: 'v-text-field',
           key: 'name',
+          validation: 'required',
         },
         {
           component: 'v-text-field',
