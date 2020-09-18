@@ -27,7 +27,7 @@ export default {
       snackbar: false,
       snackbarColor: 'success',
       snackbarText: 'Successfull insert.',
-      validationErrors: [],
+      validationErrors: {},
     }
   },
   props: {
@@ -53,12 +53,14 @@ export default {
       objectToInsert = this.excludeEmptyFields(objectToInsert)
       axios
         .post(this.endpoint, objectToInsert)
-        .then(() => {
-          ;(this.snackbar = true), (this.snackbarColor = 'success')
+        .then((res) => {
+          console.log(res.status)
+
+          this.snackbarColor = 'success'
+          this.snackbar = true
           this.snackbarText = 'Successfull insert.'
         })
         .catch((error) => {
-          this.snackbar = true
           if (error.response.status == this.clientErrorResponseCode) {
             this.snackbarColor = 'warning'
             this.snackbarText = 'There are some validation errors.'

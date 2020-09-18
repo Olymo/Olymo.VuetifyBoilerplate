@@ -14,11 +14,13 @@
           :key="formElement.key"
         >
           <component
+            @change="genericChange(formElement.key, $event)"
             :is="formElement.component"
+            :ref="formElement.key"
             v-bind:key="formElement.key"
             :label="label(formElement)"
             :type="type(formElement)"
-            :items="dataSource(formElement)"
+            :items="dataSources[formElement.key]"
             outlined
             :hide-detals="true"
             :error-messages="errors"
@@ -61,11 +63,15 @@ export default {
   data: function() {
     return {
       formObject: {},
+      dataSources: {},
     }
   },
   mounted: function() {
     for (let el of this.formElements) {
       this.formObject[el.key] = ''
+      if (this.shouldContainDataSource(el)) {
+        this.$set(this.dataSources, el.key, this.dataSource(el))
+      }
     }
   },
   methods: {
@@ -142,11 +148,26 @@ export default {
         }
       })
     },
+    find(key) {
+      return this.formElements.filter((x) => x.key == key)[0]
+    },
+    genericChange(key, value) {
+      let element = this.find(key)
+      if (element && element.behavior) {
+        let dsChanges = element.behavior.changesDataSource
+        if (dsChanges) {
+          for (let ds of dsChanges) {
+            if (ds.bindings[value]) {
+              this.$set(this.dataSources, ds.changee, ds.bindings[value])
+            }
+          }
+        }
+      }
+    },
   },
   watch: {
     errors: {
       handler() {
-        console.log('jeste')
         this.$refs.observer.setErrors(this.errors)
       },
     },

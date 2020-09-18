@@ -29,6 +29,19 @@ export default {
             { text: 'Category 1', value: 1 },
             { text: 'Category 2', value: 2 },
           ],
+          behavior: {
+            changesDataSource: [
+              {
+                changee: 'category2',
+                bindings: {
+                  '1': [
+                    { text: 'A', value: 'A' },
+                    { text: 'B', value: 'B' },
+                  ],
+                },
+              },
+            ],
+          },
         },
         {
           component: 'v-select',
