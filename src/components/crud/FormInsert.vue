@@ -50,36 +50,25 @@ export default {
   },
   methods: {
     handleInsert(objectToInsert) {
-      objectToInsert = this.excludeEmptyFields(objectToInsert)
       axios
         .post(this.endpoint, objectToInsert)
-        .then((res) => {
-          console.log(res.status)
-
+        .then(() => {
           this.snackbarColor = 'success'
           this.snackbar = true
           this.snackbarText = 'Successfull insert.'
         })
         .catch((error) => {
+          this.snackbar = true
           if (error.response.status == this.clientErrorResponseCode) {
             this.snackbarColor = 'warning'
             this.snackbarText = 'There are some validation errors.'
             this.getErrorsFromResponse(error.response)
           } else {
-            this.this.snackbarColor = 'danger'
+            this.snackbarColor = 'red'
             this.snackbarText =
               'An error has occured. Please contact administrator.'
           }
         })
-    },
-    excludeEmptyFields(objectToInsert) {
-      let transformed = {}
-      for (let prop in objectToInsert) {
-        if (objectToInsert[prop] || objectToInsert[prop] === false) {
-          transformed[prop] = objectToInsert[prop]
-        }
-      }
-      return transformed
     },
     getErrorsFromResponse(response) {
       this.validationErrors = {}

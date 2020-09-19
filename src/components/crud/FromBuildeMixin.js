@@ -5,6 +5,8 @@ export default {
       changeFunctions: {
         dataSource: this.handleDataSourceChange,
         hide: this.handleHide,
+        disable: this.handleDisable,
+        clear: this.handleClear,
       },
     }
   },
@@ -15,11 +17,17 @@ export default {
     },
     prepareFormObject() {
       for (let el of this.formElements) {
-        this.formObject[el.key] = ''
+        this.formObject[el.key] = this.incommingValue(el.key)
         if (dataSourceBuilder.shouldContainDataSource(el)) {
           this.$set(this.dataSources, el.key, this.dataSource(el))
         }
       }
+    },
+    incommingValue(key) {
+      if (this.incommingObject) {
+        return this.incommingObject[key] ? this.incommingObject[key] : ''
+      }
+      return ''
     },
     dataSource: function(formElement) {
       return dataSourceBuilder.buildDataSource(formElement)
@@ -35,13 +43,28 @@ export default {
     handleHide(toBeAffected, value) {
       this.$set(this.hidden, toBeAffected.key, value != '')
     },
+    handleClear(toBeAffected) {
+      this.$set(this.formObject, toBeAffected.key, '')
+    },
+    handleDisable(toBeAffected, value) {
+      this.$set(
+        this.disabled,
+        toBeAffected.key,
+        toBeAffected.change.when == value
+      )
+    },
     handleDataSourceChange: function(toBeAffected, value) {
       let isChangeSpecificToSelectedElement =
         toBeAffected.change.bindings && toBeAffected.change.bindings[value]
       if (isChangeSpecificToSelectedElement) {
         let binding = toBeAffected.change.bindings[value]
         if (Array.isArray(binding)) {
+          binding = dataSourceBuilder.addFirstOption(binding)
           this.$set(this.dataSources, toBeAffected.key, binding)
+          let selected = binding.find((x) => x.selected)
+          if (selected) {
+            this.formObject[toBeAffected.key] = selected.value
+          }
           return
         }
         if (binding.api) {

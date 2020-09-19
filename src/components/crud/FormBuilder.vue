@@ -8,16 +8,19 @@
       >
         <ValidationProvider
           :vid="formElement.key"
-          v-slot="{ errors }"
+          v-slot="{ errors, passed }"
           :name="formElement.key"
           :rules="rules(formElement)"
           :key="formElement.key"
           v-if="!hidden[formElement.key]"
         >
           <component
+            :disabled="disabled[formElement.key]"
+            :placeholder="hint(formElement)"
+            :success="passed"
             v-if="!hidden[formElement.key]"
             @change="handleChange(formElement.key, $event)"
-            :is="formElement.component"
+            :is="component(formElement)"
             :ref="formElement.key"
             v-bind:key="formElement.key"
             :label="label(formElement)"
@@ -62,21 +65,32 @@ export default {
       type: Object,
       required: false,
     },
+    incommingObject: {
+      type: Object,
+      required: false,
+    },
   },
   data: function() {
     return {
       formObject: {},
       dataSources: {},
       hidden: {},
+      disabled: {},
     }
   },
   mounted: function() {
     this.prepareFormObject()
   },
   methods: {
+    component: function(formElement) {
+      return formElement.component ? formElement.component : 'v-text-field'
+    },
+    hint: function(formElement) {
+      return formElement.hint ? formElement.hint : ''
+    },
     label: function(formElement) {
-      if (formElement.placeholder) {
-        return formElement.placeholder
+      if (formElement.label) {
+        return formElement.label
       }
       return this.toSentenceCase(formElement.key)
     },
@@ -84,8 +98,8 @@ export default {
       return formElement.type ? formElement.type : ''
     },
     rules: function(formElement) {
-      if (formElement.validation) {
-        return formElement.validation
+      if (formElement.rules) {
+        return formElement.rules
       }
       return ''
     },
@@ -97,7 +111,11 @@ export default {
         if (valid) {
           let objectToSubmit = {}
           for (let prop in this.formObject) {
-            if (!this.hidden[prop]) {
+            if (
+              !this.hidden[prop] &&
+              this.formObject[prop] &&
+              this.formObject[prop] !== false
+            ) {
               objectToSubmit[prop] = this.formObject[prop]
             }
           }
@@ -190,5 +208,9 @@ export default {
 .col-xl-12,
 .col-xl-auto {
   padding: 0px 5px 0px 5px !important;
+}
+.v-input--selection-controls {
+  margin-top: 0px;
+  padding-top: 0px;
 }
 </style>

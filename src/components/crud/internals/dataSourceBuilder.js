@@ -55,4 +55,5 @@ function loadDataSourceFromApi(api) {
 export default {
   buildDataSource,
   shouldContainDataSource,
+  addFirstOption,
 }

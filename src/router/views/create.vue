@@ -13,14 +13,21 @@ export default {
     return {
       formElements: [
         {
-          component: 'v-text-field',
           key: 'name',
-          validation: 'required',
+          rules: 'required',
         },
         {
-          component: 'v-text-field',
           key: 'price',
           type: 'number',
+        },
+        {
+          key: 'email',
+          rules: 'required|email',
+        },
+        {
+          key: 'FirstName',
+          rules: { regex: '^[A-Z][a-z]{2,12}$', required: true },
+          hint: 'Primer: Petar (prvo slovo veliko)',
         },
         {
           component: 'v-autocomplete',
@@ -37,7 +44,7 @@ export default {
                 bindings: {
                   '1': [
                     { text: 'A', value: 'A' },
-                    { text: 'B', value: 'B' },
+                    { text: 'B', value: 'B', selected: true },
                   ],
                   '2': {
                     api: {
@@ -52,20 +59,36 @@ export default {
         {
           component: 'v-select',
           key: 'parentProductId',
-          placeholder: 'Parent Product',
+          label: 'Parent Product',
           api: {
             endpoint: 'http://localhost:5000/api/products',
           },
+          rules: 'required',
         },
         {
           component: 'v-checkbox',
           key: 'testCheckbox',
           label: 'Primer Checkbox-a',
+          affects: [
+            {
+              key: 'category',
+              change: {
+                type: 'disable',
+                when: true,
+              },
+            },
+            {
+              key: 'email',
+              change: {
+                type: 'clear',
+              },
+            },
+          ],
         },
         {
           component: 'v-select',
           key: 'categoryId',
-          placeholder: 'Product Category',
+          label: 'Product Category',
           api: {
             endpoint: 'http://localhost:5000/api/categories',
           },
@@ -97,8 +120,8 @@ export default {
 <template>
   <Layout>
     <v-row>
-      <v-col cols="6">
-        <v-card class="pl-5 pr-5">
+      <v-col cols="3" offset="4">
+        <v-card class="pl-5 pr-5 pt-5">
           <FormInsert
             :formElements="formElements"
             endpoint="http://localhost:5000/api/products"
