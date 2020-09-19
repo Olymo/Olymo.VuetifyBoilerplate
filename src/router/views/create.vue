@@ -29,23 +29,30 @@ export default {
             { text: 'Category 1', value: 1 },
             { text: 'Category 2', value: 2 },
           ],
-          behavior: {
-            changesDataSource: [
-              {
-                changee: 'category2',
+          affects: [
+            {
+              key: 'parentProductId',
+              change: {
+                type: 'dataSource',
                 bindings: {
                   '1': [
                     { text: 'A', value: 'A' },
                     { text: 'B', value: 'B' },
                   ],
+                  '2': {
+                    api: {
+                      endpoint: 'http://localhost:5000/api/products',
+                    },
+                  },
                 },
               },
-            ],
-          },
+            },
+          ],
         },
         {
           component: 'v-select',
-          key: 'category2',
+          key: 'parentProductId',
+          placeholder: 'Parent Product',
           api: {
             endpoint: 'http://localhost:5000/api/products',
           },
@@ -54,6 +61,32 @@ export default {
           component: 'v-checkbox',
           key: 'testCheckbox',
           label: 'Primer Checkbox-a',
+        },
+        {
+          component: 'v-select',
+          key: 'categoryId',
+          placeholder: 'Product Category',
+          api: {
+            endpoint: 'http://localhost:5000/api/categories',
+          },
+          affects: [
+            {
+              key: 'parentProductId',
+              change: {
+                type: 'dataSource',
+                api: {
+                  endpoint: 'http://localhost:5000/api/products?categoryId=',
+                  associateValue: true,
+                },
+              },
+            },
+            {
+              key: 'testCheckbox',
+              change: {
+                type: 'hide',
+              },
+            },
+          ],
         },
       ],
     }

@@ -12,9 +12,11 @@
           :name="formElement.key"
           :rules="rules(formElement)"
           :key="formElement.key"
+          v-if="!hidden[formElement.key]"
         >
           <component
-            @change="genericChange(formElement.key, $event)"
+            v-if="!hidden[formElement.key]"
+            @change="handleChange(formElement.key, $event)"
             :is="formElement.component"
             :ref="formElement.key"
             v-bind:key="formElement.key"
@@ -36,16 +38,17 @@
   </ValidationObserver>
 </template>
 <script>
-import $ from 'jquery'
 import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
+import formBuilderMixin from './FromBuildeMixin'
 export default {
   components: {
     ValidationProvider,
     ValidationObserver,
   },
+  mixins: [formBuilderMixin],
   props: {
     formElements: {
       type: Array,
@@ -64,15 +67,11 @@ export default {
     return {
       formObject: {},
       dataSources: {},
+      hidden: {},
     }
   },
   mounted: function() {
-    for (let el of this.formElements) {
-      this.formObject[el.key] = ''
-      if (this.shouldContainDataSource(el)) {
-        this.$set(this.dataSources, el.key, this.dataSource(el))
-      }
-    }
+    this.prepareFormObject()
   },
   methods: {
     label: function(formElement) {
@@ -84,24 +83,6 @@ export default {
     type: function(formElement) {
       return formElement.type ? formElement.type : ''
     },
-    dataSource: function(formElement) {
-      if (!this.shouldContainDataSource(formElement)) {
-        return
-      }
-      if (formElement.dataSource) {
-        return formElement.dataSource
-      }
-      if (!formElement.api) {
-        throw new Error(
-          formElement.component +
-            ' must have defined dataSource property or appropriate api settings.'
-        )
-      }
-
-      let items = this.loadDataSourceFromApi(formElement.api)
-
-      return items
-    },
     rules: function(formElement) {
       if (formElement.validation) {
         return formElement.validation
@@ -109,60 +90,23 @@ export default {
       return ''
     },
     cols: function(formElement) {
-      return formElement.cols ? formElement.cols : 6
-    },
-    shouldContainDataSource(formElement) {
-      let elementsWithDataSource = ['v-autocomplete', 'v-select']
-      return elementsWithDataSource.includes(formElement.component)
-    },
-    loadDataSourceFromApi(api) {
-      let items = []
-
-      $.ajax({
-        url: api.endpoint,
-        async: false,
-        success: function(data) {
-          items = data
-        },
-      })
-
-      if (!api.textProperty) {
-        api.textProperty = 'name'
-        api.valueProperty = 'id'
-      }
-
-      items.forEach((i) => {
-        ;(i.text = i[api.textProperty]), (i.value = i[api.valueProperty])
-      })
-
-      return items
-    },
-    toSentenceCase(text) {
-      var result = text.replace(/([A-Z])/g, ' $1')
-      return result.charAt(0).toUpperCase() + result.slice(1)
+      return formElement.cols ? formElement.cols : 12
     },
     submit() {
       this.$refs.observer.validate().then((valid) => {
         if (valid) {
-          this.handleSubmit(this.formObject)
+          let objectToSubmit = {}
+          for (let prop in this.formObject) {
+            if (!this.hidden[prop]) {
+              objectToSubmit[prop] = this.formObject[prop]
+            }
+          }
+          this.handleSubmit(objectToSubmit)
         }
       })
     },
     find(key) {
       return this.formElements.filter((x) => x.key == key)[0]
-    },
-    genericChange(key, value) {
-      let element = this.find(key)
-      if (element && element.behavior) {
-        let dsChanges = element.behavior.changesDataSource
-        if (dsChanges) {
-          for (let ds of dsChanges) {
-            if (ds.bindings[value]) {
-              this.$set(this.dataSources, ds.changee, ds.bindings[value])
-            }
-          }
-        }
-      }
     },
   },
   watch: {
