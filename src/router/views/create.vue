@@ -14,6 +14,8 @@ export default {
       formElements: productForm.formElements,
       updateObject: {
         email: 'luka.lukic@ict.edu.rs',
+        name: 'Naziv',
+        price: 222,
       },
     }
   },
@@ -28,8 +30,7 @@ export default {
           <Form
             :formElements="formElements"
             :updateObject="updateObject"
-            method="PUT"
-            endpoint="http://localhost:5000/api/products/1"
+            endpoint="http://localhost:5000/api/products"
             type="update"
           />
         </v-card>

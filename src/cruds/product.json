@@ -1,0 +1,21 @@
+{
+  "toExclude": ["category", "categoryId", "description"],
+  "specialized": [{ "column": "picture", "type": "image" }],
+  "apiSettings": {
+    "endpoint": "http://localhost:5000/api/products",
+    "method": "GET",
+    "serverSidePaging": true
+  },
+  "filters": [
+    { "key": "name", "validation": "required" },
+    { "key": "price", "type": "number" },
+    {
+      "component": "v-autocomplete",
+      "key": "categoryId",
+      "dataSource": [
+        { "text": "Category 1", "value": 1 },
+        { "text": "Category 2", "value": 2 }
+      ]
+    }
+  ]
+}

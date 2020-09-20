@@ -2,7 +2,7 @@
 import appConfig from '@src/app.config'
 import Table from '@components/crud/Table.vue'
 import Layout from '@layouts/main.vue'
-
+import page from '@src/cruds/product.json'
 export default {
   page: {
     title: 'Home',
@@ -11,50 +11,7 @@ export default {
   components: { Layout, Table },
   data() {
     return {
-      toExclude: ['userId'],
-      specialized: [
-        {
-          column: 'picture',
-          type: 'image',
-        },
-      ],
-      apiSettings: {
-        endpoint: 'http://localhost:5000/api/products',
-        method: 'GET',
-        serverSidePaging: true,
-      },
-      formElements: [
-        {
-          component: 'v-text-field',
-          key: 'name',
-          validation: 'required',
-        },
-        {
-          component: 'v-text-field',
-          key: 'price',
-          type: 'number',
-        },
-        {
-          component: 'v-autocomplete',
-          key: 'category',
-          dataSource: [
-            { text: 'Category 1', value: 1 },
-            { text: 'Category 2', value: 2 },
-          ],
-        },
-        {
-          component: 'v-select',
-          key: 'category2',
-          api: {
-            endpoint: 'http://localhost:5000/api/products',
-          },
-        },
-        {
-          component: 'v-checkbox',
-          key: 'testCheckbox',
-          label: 'Primer Checkbox-a',
-        },
-      ],
+      page: page,
     }
   },
 }
@@ -63,11 +20,11 @@ export default {
 <template>
   <Layout>
     <Table
-      :apiSettings="apiSettings"
-      :headersToExclude="toExclude"
-      :specializedColumns="specialized"
+      :apiSettings="page.apiSettings"
+      :headersToExclude="page.toExclude"
+      :specializedColumns="page.specialized"
       columnWidth="auto"
-      :formElements="formElements"
+      :filters="page.filters"
     />
   </Layout>
 </template>

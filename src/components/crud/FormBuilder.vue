@@ -35,7 +35,12 @@
         </ValidationProvider>
       </v-col>
       <v-col cols="12">
-        <v-btn small @click="submit" class="float-right mb-5">Submit</v-btn>
+        <v-btn small color="success" @click="submit" class="float-right ml-3"
+          >Submit</v-btn
+        >
+        <v-btn small color="warning" @click="reset" class="float-right"
+          >Cancel</v-btn
+        >
       </v-col>
     </v-row>
   </ValidationObserver>
@@ -46,6 +51,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import formBuilderMixin from './FromBuildeMixin'
+import EventBus from '@utils/event-bus'
 export default {
   components: {
     ValidationProvider,
@@ -119,9 +125,21 @@ export default {
               objectToSubmit[prop] = this.formObject[prop]
             }
           }
-          this.handleSubmit(objectToSubmit)
+          try {
+            this.handleSubmit(objectToSubmit)
+            EventBus.$emit('SUCESSFULL_INSERT')
+          } catch (e) {
+            throw new Error(
+              'There was an error calling a provided function in FormBuilder',
+              e
+            )
+          }
         }
       })
+    },
+    reset() {
+      this.$refs.observer.reset()
+      EventBus.$emit('FORM_RESET')
     },
     find(key) {
       return this.formElements.filter((x) => x.key == key)[0]

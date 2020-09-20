@@ -7,7 +7,7 @@
       "component": "v-textarea"
     },
     {
-      "component": "v-select",
+      "component": "v-autocomplete",
       "key": "parentProductId",
       "label": "Parent Product",
       "api": { "endpoint": "http://localhost:5000/api/products" },

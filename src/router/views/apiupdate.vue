@@ -5,7 +5,7 @@
         :formElements="formElements"
         resource="products"
         apiDomain="http://localhost:5000"
-        identifier="1"
+        identifier="18"
       />
     </v-col>
   </v-row>

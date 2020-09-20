@@ -1,6 +1,33 @@
 <template>
   <v-row class="container">
     <v-col cols="10">
+      <template>
+        <v-row>
+          <v-dialog v-model="dialog" max-width="600px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn small dark v-bind="attrs" v-on="on">
+                New Product
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">User Profile</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <CrudForm
+                      :endpoint="apiSettings.endpoint"
+                      :formElements="filters"
+                      type="insert"
+                    />
+                  </v-row>
+                </v-container>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </template>
       <v-data-table
         :items="data"
         :headers="headers"
@@ -16,7 +43,7 @@
       </v-data-table>
     </v-col>
     <v-col>
-      <FormBuilder :formElements="formElements" :handleSubmit="handleSearch" />
+      <FormBuilder :formElements="filters" :handleSubmit="handleSearch" />
     </v-col>
   </v-row>
 </template>
@@ -26,13 +53,16 @@ import tableDefaults from './tableDefaults'
 import config from './tableGlobalConfig.json'
 import pixelWidth from 'string-pixel-width'
 import FormBuilder from './FormBuilder.vue'
+import CrudForm from './CrudForm.vue'
+import EventBus from '@utils/event-bus'
 export default {
-  components: { FormBuilder },
+  components: { FormBuilder, CrudForm },
   props: tableDefaults.props,
   data: function() {
     return {
       config: config,
       options: {},
+      dialog: false,
     }
   },
   computed: {
@@ -61,6 +91,11 @@ export default {
     this.$store.dispatch('table/setApiSettings', this.apiSettings)
     this.$store.dispatch('table/setSpecializedColumns', this.specializedColumns)
     this.$store.dispatch('table/getFromApi')
+
+    let that = this
+    EventBus.$on('FORM_RESET', function() {
+      that.dialog = false
+    })
   },
   methods: {
     setHeaderWidth: function(header) {
@@ -92,7 +127,6 @@ export default {
     options: {
       handler() {
         let sorts = []
-        console.log(this.options)
         if (this.$store) {
           if (this.options.sortBy.length) {
             for (let i = 0; i < this.options.sortBy.length; i++) {
