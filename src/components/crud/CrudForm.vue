@@ -4,6 +4,7 @@
       :formElements="formElements"
       :handleSubmit="handleInsert"
       :errors="validationErrors"
+      :incommingObject="updateObject"
     />
     <v-snackbar v-model="snackbar" right :color="snackbarColor">
       {{ snackbarText }}
@@ -28,6 +29,7 @@ export default {
       snackbarColor: 'success',
       snackbarText: 'Successfull insert.',
       validationErrors: {},
+      allowedTypes: ['insert', 'update'],
     }
   },
   props: {
@@ -47,11 +49,41 @@ export default {
       type: Number,
       default: 422,
     },
+    type: {
+      type: String,
+      required: true,
+    },
+    updateObject: {
+      type: Object,
+      required: false,
+    },
+  },
+  beforeMount() {
+    if (!this.allowedTypes.includes(this.type)) {
+      throw new Error(
+        'Invalid value for prop "type". Use either "insert" or "update".'
+      )
+    }
+
+    if (this.type == 'update' && !this.updateObject) {
+      throw new Error(
+        'Prop "updateObject" is required when update form is used.'
+      )
+    }
+
+    if (this.type == 'insert' && this.updateObject) {
+      throw new Error(
+        'Prop "updateObject" should not be used when form type is insert.'
+      )
+    }
   },
   methods: {
     handleInsert(objectToInsert) {
-      axios
-        .post(this.endpoint, objectToInsert)
+      axios({
+        method: this.method,
+        url: this.endpoint,
+        data: objectToInsert,
+      })
         .then(() => {
           this.snackbarColor = 'success'
           this.snackbar = true
@@ -75,6 +107,13 @@ export default {
       for (let error of response.data) {
         this.$set(this.validationErrors, error.propertyName, [error.error])
       }
+    },
+  },
+  watch: {
+    incommingObject: {
+      handler() {
+        console.log('Izmena')
+      },
     },
   },
 }

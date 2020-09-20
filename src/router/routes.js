@@ -12,6 +12,11 @@ export default [
     component: () => lazyLoadView(import('@views/create.vue')),
   },
   {
+    path: '/apiupdate',
+    name: 'apiupdate',
+    component: () => lazyLoadView(import('@views/apiupdate.vue')),
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => lazyLoadView(import('@views/login.vue')),

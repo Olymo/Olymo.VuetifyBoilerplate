@@ -14,6 +14,7 @@ const aliases = {
   '@state': 'src/state',
   '@design': 'src/design',
   '@plugins': 'src/plugins',
+  '@forms': 'src/forms',
 }
 
 module.exports = {
