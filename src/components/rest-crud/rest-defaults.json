@@ -1,0 +1,33 @@
+{
+    "dataExtraction": {
+        "dataProperty": "items",
+        "totalItemsProperty": "totalCount"
+    },
+    "messages": {
+        "deleteConfirmMessage": "$confirmDelete",
+        "deleteYes": "$yes",
+        "deleteNo": "$no"
+    },
+    "filters": [
+        {"key": "keyword"}
+    ],
+    "filtersPosition": "right",
+    "processDataOn": "server",
+    "excludedHeaders": ["id", "fileName"],
+    "itemsPerPageText": "$perPage",
+    "addBtn": {"text": "$addNew", "color": "primary"},
+    "insertModalOpts": {
+        "submitText": "$submit",
+        "submitColor": "primary",
+        "cancelText": "$cancel",
+        "cancelColor": "secondary"
+    },
+    "tableProps": {
+        "class": "elevation-1",
+        "dense": true
+    },
+    "searchSubmit":{
+        "text":"$search",
+        "color":"primary"
+    }
+}

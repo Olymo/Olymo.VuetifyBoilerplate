@@ -1,0 +1,14 @@
+{
+    "test" : "Test na engleskom",
+    "welcomeMessage" : "Welcome to our application.",
+    "addNew": "Add new item",
+    "restTable" : {
+        "perPage": "Items per page",
+        "create": "Create new item",
+        "allRecords": "All",
+        "delete": "Remove an item"
+    },
+    "confirmDelete": "Are you confirming the delete process?",
+    "yes" : "Yes",
+    "no": "No"
+}

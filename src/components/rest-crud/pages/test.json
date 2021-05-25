@@ -1,0 +1,27 @@
+{
+    "resource": "/product",
+    "useCases": {
+      "insert": "AddManufacturer",
+      "search": "SearchManufacturers",
+      "update": "UpdateManufacturer",
+      "delete": "DeleteManufacturer"
+    },
+    "processDataOn": "client",
+    "insertFields": [
+      {
+        "key":"name",
+        "rules":"required",
+        "label":"$name",
+        "cols":12
+      },
+      {
+        "key":"price",
+        "type": "number",
+        "rules":"required|numeric",
+        "label":"$price",
+        "cols":12
+      }
+    ],
+    "headersToExclude": ["manufacturerVehicleTypes", "identifier", "id"],
+    "excludedHeaders": ["id","categoryId","category"]
+  }
