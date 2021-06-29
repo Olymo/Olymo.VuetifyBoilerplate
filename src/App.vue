@@ -15,28 +15,44 @@
     </v-app-bar>
 
     <v-main>
-      <rest-crud-page page="test"></rest-crud-page>
-      <p>{{ $t("welcomeMessage") }}</p>
+      <Login v-if="isAuthorized == false" />
+
+      <div v-else>
+        <rest-crud-page page="test"></rest-crud-page>
+        <p>{{ $t("welcomeMessage") }}</p>
+
+      </div>
+
     </v-main>
   </v-app>
 </template>
 
 <script>
 import RestCrudPage from "./components/rest-crud/RestCrudPage.vue";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import "./assets/custom.css";
+import { isAuthorized } from './util/user';
+
 export default {
   components: {
     RestCrudPage,
+    Login,
+    Register,
   },
   name: "App",
 
   data: () => ({
-    //
+    isAuthorized: false,
   }),
   mounted() {
-    this.$http.get("test").then((r) => {
-      console.log(r);
-    });
+    // this.$http.get("api/account/CheckAuthorization")
+    //   .then((r) => {
+    //     console.log(r);
+    //   });
   },
+  created() {
+    this.isAuthorized = isAuthorized();
+  }
 };
 </script>
