@@ -43,6 +43,8 @@ const errorInterceptor = error => {
 
       var refreshToken = getRefreshToken();
 
+      console.log("Ovo je refresh token " + refreshToken);
+
       if(!refreshToken) {
         //window.location = "/login"
         return Promise.reject(error)
@@ -76,6 +78,6 @@ const responseInterceptor = (response) => {
   return response;
 };
 
-httpClient.interceptors.response.use(responseInterceptor); 
+httpClient.interceptors.response.use(responseInterceptor, errorInterceptor); 
 
 export default httpClient;

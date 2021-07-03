@@ -15,13 +15,17 @@
     </v-app-bar>
 
     <v-main>
-      <Login v-if="isAuthorized == false" />
+      <!-- <Login v-if="isAuthorized == false" /> -->
 
-      <div v-else>
+      <Login />
+
+      <Cart />
+
+      <!-- <div>
         <rest-crud-page page="test"></rest-crud-page>
         <p>{{ $t("welcomeMessage") }}</p>
 
-      </div>
+      </div> -->
 
     </v-main>
   </v-app>
@@ -30,6 +34,7 @@
 <script>
 import RestCrudPage from "./components/rest-crud/RestCrudPage.vue";
 import Login from "./components/Login";
+import Cart from './components/Cart';
 import Register from "./components/Register";
 import "./assets/custom.css";
 import { isAuthorized } from './util/user';
@@ -39,6 +44,7 @@ export default {
     RestCrudPage,
     Login,
     Register,
+    Cart,
   },
   name: "App",
 

@@ -112,6 +112,14 @@ export default {
 
         let actorData = decodeJwtToken();
         console.log(actorData);
+
+        this.$http.get("api/carts")
+        .then(res => {
+          console.log("Ovo je odgovor od carts");
+          console.log(res)
+        })
+        .catch(err => console.log(err));
+
       })
       .catch(err => console.error(err));
 
@@ -123,6 +131,10 @@ export default {
 
       let result = isAuthorized();
       console.log(result);
+
+      this.$http.get("api/account/checkAuthorization")
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
     },
   },
   // created() {
