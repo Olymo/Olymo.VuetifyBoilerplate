@@ -43,29 +43,34 @@ const errorInterceptor = error => {
 
       var refreshToken = getRefreshToken();
 
-      console.log("Ovo je refresh token " + refreshToken);
-
       if(!refreshToken) {
         //window.location = "/login"
         return Promise.reject(error)
       }
 
-      httpClient.post("api/account/RefreshToken", {refreshToken})
-        .then(res => {
-            localStorage.setItem("tokens", JSON.stringify(res.data));
+      if(!originalRequest._retry) {
+        originalRequest._retry = true
 
-            originalRequest.headers.Authorization = getAuthToken();
+        httpClient.post("api/account/RefreshToken", {
+            refreshToken
+          })
+          .then(res => {
+              localStorage.setItem("tokens", JSON.stringify(res.data));
+  
+              originalRequest.headers.Authorization = getAuthToken();
+  
+              return httpClient(originalRequest);
+          })
+          .catch(err => {
+              console.log(err);
+  
+              localStorage.removeItem("tokens");
+  
+              return Promise.reject(error);
+          });
 
-            return httpClient(originalRequest);
-        })
-        .catch(err => {
-            console.log(err);
-
-            localStorage.removeItem("tokens");
-
-            return Promise.reject(error);
-        });
-
+      }
+      
       break
     default:
       console.error(error.response.status, error.message)
