@@ -2,7 +2,7 @@ import axios from "axios";
 import i18n from "../plugins/i18n/i18n";
 
 const httpClient = axios.create({
-  baseURL: "http://localhost:5010/",
+  baseURL: "http://localhost:5010/api/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -51,7 +51,7 @@ const errorInterceptor = error => {
       if(!originalRequest._retry) {
         originalRequest._retry = true
 
-        httpClient.post("api/account/RefreshToken", {
+        httpClient.post("account/RefreshToken", {
             refreshToken
           })
           .then(res => {

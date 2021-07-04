@@ -1,0 +1,38 @@
+{
+    "resource": "/roles",
+    "useCases": {
+        "insert": "AddRole",
+        "search": "SearchRoles",
+        "update": "UpdateRole",
+        "delete": "DeleteRole"
+      },
+    "insertFields": [
+        {
+            "key":"name",
+            "label":"$name",
+            "rules":"required",
+            "cols":{ "sm": 12}
+        },
+        {
+            "key":"description",
+            "label":"$description",
+            "cols":{ "sm": 12},
+            "component":"v-textarea",
+            "rules":"required"
+        },
+        {
+            "key":"useCaseIds",
+            "label":"$useCases",
+            "cols":{ "sm": 12},
+            "component":"v-use-cases-input",
+            "props":{
+                "multiple":true
+            }
+        }
+      ],
+      "processDataOn": "client",
+      "headers": [
+        { "text": "$name", "value": "name" }
+      ]
+
+}

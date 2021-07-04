@@ -83,7 +83,7 @@
                           clear
                         </v-btn>
 
-                        <a href="#" class="pl-5">Login</a>
+                        <router-link :to="{ name: 'login' }" class="pl-5" >Login</router-link>
                     </form>
                 </validation-observer>
               </div>
@@ -137,7 +137,7 @@ export default {
     submit () {
       this.$refs.observer.validate()
 
-      this.$http.post("api/account/", {
+      this.$http.post("account/", {
         name: this.name,
         email: this.email,
         username: this.username,

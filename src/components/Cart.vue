@@ -86,7 +86,7 @@
     }),
     methods: {
         updateQuantity(quantity, cartId) {
-          this.$http.put("api/carts", {
+          this.$http.put("carts", {
               quantity,
               cartId
           })
@@ -98,7 +98,7 @@
             
         },
         removeProductFromCart(cartId) {
-          this.$http.delete("api/carts/" + cartId)
+          this.$http.delete("carts/" + cartId)
           .then(res => {
             console.log(res)
           })
@@ -106,7 +106,7 @@
         }
     },
     beforeMount: function() {
-      // this.$http.get("api/carts")
+      // this.$http.get("carts")
       //   .then(res => {
       //     console.log(res)
       //   })

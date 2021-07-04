@@ -55,8 +55,8 @@
                         <v-btn @click="clear">
                           clear
                         </v-btn>
-
-                        <a href="#" class="pl-5">Register here</a>
+                        
+                        <router-link :to="{ name: 'register' }" class="pl-5" >Register here</router-link>
                     </form>
                 </validation-observer>
               </div>
@@ -104,7 +104,7 @@ export default {
     submit () {
       this.$refs.observer.validate()
 
-      this.$http.post("api/account/locallogin", this.user)
+      this.$http.post("account/locallogin", this.user)
       .then(res => {
         console.log(res);
 
@@ -113,12 +113,14 @@ export default {
         let actorData = decodeJwtToken();
         console.log(actorData);
 
-        this.$http.get("api/carts")
+        this.$http.get("carts")
         .then(res => {
           console.log("Ovo je odgovor od carts");
           console.log(res)
         })
         .catch(err => console.log(err));
+
+        this.$router.push('/products');
 
       })
       .catch(err => console.error(err));
@@ -132,7 +134,7 @@ export default {
       let result = isAuthorized();
       console.log(result);
 
-      this.$http.get("api/account/checkAuthorization")
+      this.$http.get("account/checkAuthorization")
         .then(res => console.log(res))
         .catch(err => console.log(err));
     },

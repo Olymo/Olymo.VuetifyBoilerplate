@@ -12,7 +12,7 @@ export const isAuthorized = () => {
 
     return true;
 
-    // httpClient.get("api/account/CheckAuthorization")
+    // httpClient.get("account/CheckAuthorization")
     //     .then(res => {
     //         console.log(res);
     //         console.log("Upada u success");
@@ -24,7 +24,7 @@ export const isAuthorized = () => {
     //         if(err.response.status == 401) {
     //             var refreshToken = getRefreshToken();
 
-    //             httpClient.post("api/account/RefreshToken", {refreshToken})
+    //             httpClient.post("account/RefreshToken", {refreshToken})
     //                 .then(res => {
     //                     localStorage.setItem("tokens", JSON.stringify(res.data));
     //                     // sta ovde da vratim kada sam dobio nove tokene

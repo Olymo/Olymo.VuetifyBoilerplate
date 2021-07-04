@@ -1,58 +1,37 @@
 <template>
-  <v-app>
-    <v-app-bar app color="primary" dark>
-      <v-row></v-row>
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <!-- <Login v-if="isAuthorized == false" /> -->
-
-      <Login />
-
-      <Cart />
-
-      <!-- <div>
-        <rest-crud-page page="test"></rest-crud-page>
-        <p>{{ $t("welcomeMessage") }}</p>
-
-      </div> -->
-
-    </v-main>
-  </v-app>
+      <component v-bind:is="layout">
+        <slot />
+      </component>
 </template>
 
 <script>
-import RestCrudPage from "./components/rest-crud/RestCrudPage.vue";
-import Login from "./components/Login";
-import Cart from './components/Cart';
-import Register from "./components/Register";
-import "./assets/custom.css";
-import { isAuthorized } from './util/user';
+import { isAuthorized } from "./util/user";
+
+const BaseLayout = () =>
+  import(/* webpackChunkName: "layout-default" */ "./layouts/BaseLayout");
+const NoNavigationLayout = () =>
+  import(
+    /* webpackChunkName: "layout-no-navigation"*/ "./layouts/NoNavigationLayout"
+  );
 
 export default {
   components: {
-    RestCrudPage,
-    Login,
-    Register,
-    Cart,
+    NoNavigationLayout,
+    BaseLayout,
   },
+
   name: "App",
 
   data: () => ({
     isAuthorized: false,
   }),
+  computed: {
+    layout() {
+      return `${this.$route.meta.layout || "base"}-layout`;
+    },
+  },
   mounted() {
-    // this.$http.get("api/account/CheckAuthorization")
+    // this.$http.get("account/CheckAuthorization")
     //   .then((r) => {
     //     console.log(r);
     //   });

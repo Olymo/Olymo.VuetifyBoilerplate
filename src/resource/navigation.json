@@ -1,0 +1,40 @@
+{
+    "menu": [
+    
+      {
+        "href": {
+          "name": "products"
+        },
+        "title": "Products",
+        "icon": "fa fa-code"
+      },
+      {
+        "href": {
+          "name": "cart"
+        },
+        "title": "Cart",
+        "icon": "fa fa-code"
+      },
+      {
+        "href": {
+          "name": "orders"
+        },
+        "title": "Orders",
+        "icon": "fa fa-code"
+      },
+      {
+        "title": "Admin",
+        "icon": "fa fa-cog",
+        "child": [       
+          {
+            "href": {
+              "name": "admin",
+              "params": { "page": "roles"}
+            },
+            "title": "Roles",
+            "icon": "fa fa-code"
+          }
+        ]
+      }
+    ]
+  }
