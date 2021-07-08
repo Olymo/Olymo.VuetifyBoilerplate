@@ -7,14 +7,10 @@
       </v-app-bar-nav-icon>
       <v-row></v-row>
       <v-spacer></v-spacer>
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
+      <router-link v-if="!isAuthorized" :to="{ name: 'login' }" class="pl-5"
+        ><v-icon>mdi-login</v-icon></router-link
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-icon v-if="isAuthorized" @click.stop="logout">mdi-logout</v-icon>
     </v-app-bar>
 
     <sidebar-menu
@@ -60,6 +56,119 @@
   </v-app>
 </template>
 
+<script>
+import { SidebarMenu } from "vue-sidebar-menu";
+
+import navigation from "@/resource/navigation.json";
+import "../assets/custom.css";
+
+import { isAuthorized, getActorData } from "@/util/user";
+
+export default {
+  components: {
+    SidebarMenu,
+  },
+  data() {
+    return {
+      collapsed: true,
+      sidebarMenu: false,
+      themes: [
+        {
+          name: "Default theme",
+          input: "",
+        },
+        {
+          name: "White theme",
+          input: "white-theme",
+        },
+      ],
+      selectedTheme: "white-theme",
+      isOnMobile: false,
+    };
+  },
+
+  computed: {
+    menu() {
+      let menu = JSON.parse(JSON.stringify(navigation.menu));
+      this.filterNav(menu, this.allowedUseCaseIds);
+      return menu;
+    },
+    allowedUseCaseIds() {
+      let actor = getActorData();
+      if (actor) {
+        return actor.AllowedUseCaseIds;
+      } else {
+        return [];
+      }
+    },
+    isAuthorized() {
+      return isAuthorized();
+    },
+  },
+  mounted() {
+    // this.onResize();
+    window.addEventListener("resize", this.onResize);
+  },
+
+  methods: {
+    filterNav(menu, allowedUseCaseIds) {
+      let i = menu.length;
+      let useCase;
+      let children;
+
+      while (i--) {
+        useCase = this.getNested(menu[i], "href", "params", "useCase");
+
+        if (useCase && !allowedUseCaseIds.includes(useCase)) {
+          menu.splice(i, 1);
+        }
+
+        children = this.getNested(menu[i], "child");
+
+        if (children && children.length) {
+          this.filterNav(menu[i].child, allowedUseCaseIds);
+
+          if (menu[i].child.length == 0) {
+            menu.splice(i, 1);
+          }
+        }
+      }
+    },
+    logout() {
+      let refreshToken = JSON.parse(localStorage.getItem("tokens")).refreshToken; 
+      this.$http
+        .post("account/logout", {refreshToken: refreshToken} )
+        .then(res => console.log(res))
+        .catch((err) => console.error(err));
+      localStorage.removeItem("tokens");
+      this.$router.go(0);
+    },
+    getNested(obj, ...args) {
+      return args.reduce((obj, level) => obj && obj[level], obj);
+    },
+    onToggleCollapse(collapsed) {
+      console.log(collapsed);
+      this.collapsed = collapsed;
+    },
+    onItemClick(event, item, node) {
+      console.log("onItemClick");
+    },
+    onResize() {
+      if (this.sidebarMenu) {
+        if (window.innerWidth <= 767) {
+          this.isOnMobile = true;
+          this.collapsed = true;
+        } else {
+          this.isOnMobile = false;
+          this.collapsed = false;
+        }
+      }
+    },
+  },
+};
+</script>
+
+
 <style lang="scss" scoped>
 @import "./../../node_modules/vue-sidebar-menu/dist/vue-sidebar-menu.css";
 
@@ -95,67 +204,4 @@
   opacity: 0.5;
   z-index: 900;
 }
-
 </style> 
-
-<script>
-import { SidebarMenu } from "vue-sidebar-menu";
-
-import navigation from "@/resource/navigation.json";
-import "../assets/custom.css";
-
-export default {
-  components: {
-    SidebarMenu,
-  },
-  data() {
-    return {
-      collapsed: true,
-      sidebarMenu: false,
-      themes: [
-        {
-          name: "Default theme",
-          input: "",
-        },
-        {
-          name: "White theme",
-          input: "white-theme",
-        },
-      ],
-      selectedTheme: "white-theme",
-      isOnMobile: false,
-    };
-  },
-
-  computed: {
-    menu() {
-      return navigation.menu;
-    },
-  },
-
-  mounted() {
-    // this.onResize();
-    window.addEventListener("resize", this.onResize);
-  },
-  methods: {
-    onToggleCollapse(collapsed) {
-      console.log(collapsed);
-      this.collapsed = collapsed;
-    },
-    onItemClick(event, item, node) {
-      console.log("onItemClick");
-    },
-    onResize() {
-      if (this.sidebarMenu) {
-        if (window.innerWidth <= 767) {
-          this.isOnMobile = true;
-          this.collapsed = true;
-        } else {
-          this.isOnMobile = false;
-          this.collapsed = false;
-        }
-      }
-    },
-  },
-};
-</script>

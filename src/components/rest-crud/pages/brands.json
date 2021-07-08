@@ -1,0 +1,22 @@
+{
+    "resource": "/brands",
+    "useCases": {
+        "insert": "AddBrand",
+        "search": "SearchBrands",
+        "update": "UpdateBrand",
+        "delete": "DeleteBrand"
+      },
+    "insertFields": [
+        {
+            "key":"name",
+            "label":"$name",
+            "rules":"required",
+            "cols":{ "sm": 12}
+        }        
+      ],
+      "processDataOn": "client",
+      "headers": [
+        { "text": "$name", "value": "name" }
+      ]
+
+}
