@@ -11,7 +11,7 @@
             height="200px"
             src="https://i.stack.imgur.com/y9DpT.jpg"
             >
-            <v-card-title> {{ this.brand }} / {{ this.category }} </v-card-title>
+            <v-card-title> {{ brand }} / {{ category }} </v-card-title>
             <v-expand-transition>
                 <div
                 v-if="hover"
@@ -24,8 +24,8 @@
             </v-expand-transition>
             </v-img>
             <v-card-text class="text--primary">
-            <div><a href="#" style="text-decoration: none"> {{ this.name }} </a></div>
-            <div>$ {{ this.price }} </div>
+            <div><a href="#" style="text-decoration: none"> {{ name }} </a></div>
+            <div>$ {{ price }} </div>
             </v-card-text>
         </v-card>
     </v-hover>
@@ -33,9 +33,6 @@
 
 <script>
 export default {
-    data: () => {
-
-    },
     computed: {
         imageSource(){
             return "https://i.stack.imgur.com/y9DpT.jpg";
