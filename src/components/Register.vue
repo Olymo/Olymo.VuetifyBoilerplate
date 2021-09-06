@@ -103,7 +103,6 @@
 <script>
 import { required, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
-import httpClient from "../util/httpClient";
 
 setInteractionMode('eager')
 
@@ -121,7 +120,6 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
-    httpClient,
   },
   data: () => ({
     username: '',

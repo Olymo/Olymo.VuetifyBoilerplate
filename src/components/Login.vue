@@ -113,17 +113,12 @@ export default {
         let actorData = decodeJwtToken();
         console.log(actorData);
 
-        this.$http.get("carts")
-        .then(res => {
-          console.log("Ovo je odgovor od carts");
-          console.log(res)
-        })
-        .catch(err => console.log(err));
-
         this.$router.push('/products');
 
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        alert("Wrong combination of username/pass.");
+      });
 
     },
     clear () {

@@ -60,6 +60,15 @@ const routes = [
             import(/* webpackChunkName: "cart-page" */ '../components/Cart')
     },
     {
+        path: '/checkout',
+        name: 'checkout',
+        meta: {
+            title: 'Checkout'
+        },
+        component: () =>
+            import(/* webpackChunkName: "cart-page" */ '../components/Checkout')
+    },
+    {
         path: '/orders',
         name: 'orders',
         meta: {
