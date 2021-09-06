@@ -3,7 +3,7 @@
     <v-dialog></v-dialog>
     <v-breadcrumbs
       :items="itemsForNavigation"
-      style="padding: 5px 0px;"
+      style="padding: 5px 0px"
     ></v-breadcrumbs>
     <v-color-picker v-if="false"></v-color-picker>
     <v-data-table v-if="false"></v-data-table>
@@ -81,6 +81,7 @@
 import defaults from "./rest-defaults.json";
 import formatDate from "../../util/formatDateHelper.js";
 import dataTableSort from "../../util/dataTableSort.js";
+import { getActorData } from "../../util/user";
 
 export default {
   name: "RestCrudPage",
@@ -112,13 +113,13 @@ export default {
       var that = this;
       return {
         date: that.dateFormatter,
-        lastLoginTime: function(value) {
+        lastLoginTime: function (value) {
           if (!value) {
             return;
           }
           return that.dateFormatter(value, "long");
         },
-        icon: function(value) {
+        icon: function (value) {
           return process.env.VUE_APP_S3_DOMAIN + "/icons/" + value;
         },
       };
@@ -199,29 +200,32 @@ export default {
   methods: {
     useCaseAllowed(useCaseName) {
       console.log(useCaseName);
-      return true;
+      // return true;
 
       //TODO implement use-casing system
-      //   if (useCaseName == "NONE") {
-      //     return true;
-      //   }
+      // if (useCaseName == "None") {
+      if (useCaseName == "NONE") {
+        return true;
+      }
 
-      //   if (!useCaseName) {
-      //     throw new Error(
-      //       `Missing use-case. Please review your json config file.`
-      //     );
-      //   }
-      //   var useCaseId = useCaseMap[useCaseName];
+      if (!useCaseName) {
+        throw new Error(
+          `Missing use-case. Please review your json config file.`
+        );
+      }
+      // var useCaseId = useCaseMap[useCaseName];
 
-      //   if (!useCaseId) {
-      //     throw new Error(
-      //       `Provided UseCase (${useCaseName}) did not resolve to any use case ID. Plase review your json config file.`
-      //     );
-      //   }
+      // if (!useCaseId) {
+      //   throw new Error(
+      //     `Provided UseCase (${useCaseName}) did not resolve to any use case ID. Plase review your json config file.`
+      //   );
+      // }
 
-      //   return JSON.parse(
-      //     store.getters["user/jwtData"].UserData
-      //   ).AllowedUseCaseIds.includes(useCaseId);
+      // return JSON.parse(
+      //   store.getters["user/jwtData"].UserData
+      // ).AllowedUseCaseIds.includes(useCaseId);
+
+      return getActorData().AllowedUseCaseIds.includes(useCaseName);
     },
     dateFormatter(value, length = "short") {
       if (!value) {

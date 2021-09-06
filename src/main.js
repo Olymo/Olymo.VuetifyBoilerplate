@@ -6,10 +6,14 @@ import i18n from "./plugins/i18n/i18n";
 import "./plugins/vee-validate";
 import httpClient from "./util/httpClient";
 import VSelectAll from '@/components/customInputs/VSelectAll'
+import VDateTextBox from '@/components/customInputs/VDateTextBox'
 import UseCasesInput from '@/components/customInputs/UseCasesInput'
+import PasswordField from '@/components/customInputs/PasswordField'
 
 Vue.component('VSelectAll', VSelectAll)
+Vue.component('v-date-field', VDateTextBox)
 Vue.component('v-use-cases-input', UseCasesInput)
+Vue.component('v-password-field', PasswordField)
 
 Vue.config.productionTip = false;
 

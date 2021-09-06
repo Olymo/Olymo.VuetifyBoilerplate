@@ -13,11 +13,16 @@ const NoNavigationLayout = () =>
   import(
     /* webpackChunkName: "layout-no-navigation"*/ "./layouts/NoNavigationLayout"
   );
+const FrontLayout = () =>
+  import(
+    /* webpackChunkName: "layout-no-navigation"*/ "./layouts/FrontLayout"
+  );
 
 export default {
   components: {
     NoNavigationLayout,
     BaseLayout,
+    FrontLayout
   },
 
   name: "App",
@@ -27,7 +32,7 @@ export default {
   }),
   computed: {
     layout() {
-      return `${this.$route.meta.layout || "base"}-layout`;
+      return `${this.$route.meta.layout || "front"}-layout`;
     },
   },
   mounted() {

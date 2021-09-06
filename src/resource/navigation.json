@@ -1,40 +1,64 @@
 {
-    "menu": [
-    
-      {
-        "href": {
-          "name": "products"
-        },
-        "title": "Products",
-        "icon": "fa fa-code"
+  "menu": [
+    {
+      "href": {
+        "name": "products"
       },
-      {
-        "href": {
-          "name": "cart"
-        },
-        "title": "Cart",
-        "icon": "fa fa-code"
+      "title": "Products",
+      "icon": "fa fa-code"
+    },
+    {
+      "href": {
+        "name": "cart"
       },
-      {
-        "href": {
-          "name": "orders"
-        },
-        "title": "Orders",
-        "icon": "fa fa-code"
+      "title": "Cart",
+      "icon": "fa fa-code"
+    },
+    {
+      "href": {
+        "name": "orders"
       },
-      {
-        "title": "Admin",
-        "icon": "fa fa-cog",
-        "child": [       
-          {
-            "href": {
-              "name": "admin",
-              "params": { "page": "roles"}
-            },
-            "title": "Roles",
-            "icon": "fa fa-code"
-          }
-        ]
-      }
-    ]
-  }
+      "title": "Orders",
+      "icon": "fa fa-code"
+    },
+    {
+      "title": "Admin",
+      "icon": "fa fa-cog",
+      "child": [
+        {
+          "href": {
+            "name": "admin",
+            "params": {
+              "page": "roles",
+              "useCase": "SearchRoles"
+            }
+          },
+          "title": "Roles",
+          "icon": "fa fa-code"
+        },        
+        {
+          "href": {
+            "name": "admin",
+            "params": {
+              "page": "brands",
+              "useCase": "SearchBrands"
+            }
+          },
+          "title": "Brands",
+          "icon": "fa fa-code"
+        },
+        {
+          "href": {
+            "name": "admin",
+            "params": {
+              "page": "users",
+              "useCase": "SearchUsers"
+            }
+          },
+          "title": "Users",
+          "icon": "fa fa-code"
+        }
+      ]
+    }
+  ]
+}
