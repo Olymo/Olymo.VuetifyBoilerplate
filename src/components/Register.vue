@@ -1,9 +1,9 @@
 <template>
-    <v-container fluid fill-height class="loginOverlay">
+    <v-container fluid fill-height class="padding-bottom">
       <v-layout flex align-center justify-center>
         <v-flex xs12 sm4 elevation-6>
           <v-toolbar class="orange-bg blue darken-4">
-            <v-toolbar-title class="white--text"><h4>Register</h4></v-toolbar-title>
+            <v-toolbar-title class="white--text"><h4>{{ registerText }}</h4></v-toolbar-title>
           </v-toolbar>
           <v-card>
             <v-card-text class="pt-4 pb-4">
@@ -16,7 +16,7 @@
 
                         <validation-provider
                         v-slot="{ errors }"
-                        name="Name"
+                        name="name"
                         rules="required|min:3|alpha_spaces"
                         >
                           <v-text-field
@@ -42,7 +42,7 @@
 
                         <validation-provider
                         v-slot="{ errors }"
-                        name="Username"
+                        name="username"
                         rules="required"
                         >
                           <v-text-field
@@ -55,15 +55,15 @@
                         
                         <validation-provider
                         v-slot="{ errors }"
-                        name="Password"
-                        rules="required|min:3"
+                        name="password"
+                        rules="required|min:5"
                         >
                           <!-- :counter="6" -->
                           <v-text-field
                               v-model="password"
                               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                               :type="showPassword ? 'text' : 'password'"
-                              hint="At least 3 characters"
+                              hint="At least 5 characters"
                               :error-messages="errors"
                               label="Password"
                               required
@@ -76,14 +76,20 @@
                           type="submit"
                           :disabled="invalid"
                           >
-                          submit
+                          {{ submitText }}
                         </v-btn>
 
-                        <v-btn @click="clear">
-                          clear
+                        <v-btn @click="clear" class="mr-4">
+                          {{ clearText }}
                         </v-btn>
 
-                        <router-link :to="{ name: 'login' }" class="pl-5" >Login</router-link>
+                        <!-- <router-link :to="{ name: 'login' }" class="pl-5" >Login</router-link> -->
+                        <v-btn @click="() =>
+                          $router.push({
+                            name: 'login',
+                          })">
+                          {{ loginText }}
+                        </v-btn>
                     </form>
                 </validation-observer>
               </div>
@@ -103,6 +109,7 @@
 <script>
 import { required, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+import translate from '../util/genTable/multilanguageHelper.js'
 
 setInteractionMode('eager')
 
@@ -128,7 +135,11 @@ export default {
     email: '',
     name: '',
     showRegister: true,
-    responseMessage: ''
+    responseMessage: '',
+    submitText: translate('Submit', 'forms'),
+    clearText: translate('Clear', 'forms'),
+    registerText: translate('Register', 'nav'),
+    loginText: translate('Login', 'nav'),
   }),
 
   methods: {
@@ -151,7 +162,14 @@ export default {
             }
 
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        let errObj = {};
+        for (const el of err.response.data.errors) {
+          let key = el.PropertyName.toLowerCase();
+          errObj[key] = el.Error
+        }
+        this.$refs.observer.setErrors(errObj);
+      });
 
     },
     clear () {
@@ -166,7 +184,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .loginOverlay {
   background:rgba(33,150,243,0.3);
 }

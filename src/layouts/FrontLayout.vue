@@ -6,43 +6,37 @@
       color="primary"
       dark
     >
-      <v-toolbar-title
-        style="width: 350px"
+      <v-toolbar-title class="col-md-6 col-sm-10"
       >
-        <a href="/" class="white--text" style="text-decoration: none"><v-icon>mdi-truck</v-icon>&nbsp; Boilerplate Template </a>
+        <a class="white--text" style="text-decoration: none" @click="()=> $router.push({name: 'home'})"><v-icon>mdi-truck</v-icon>&nbsp; Boilerplate</a>
       </v-toolbar-title>
-      <v-text-field
+      <!-- <v-text-field
         flat
         solo-inverted
         hide-details
         prepend-inner-icon="mdi-magnify"
         label="Search"
         class="hidden-sm-and-down pl-10 ml-4"
-      />
+      /> -->
       <v-spacer />
-      <v-btn icon>
-        <v-icon>mdi-account-circle</v-icon>
-      </v-btn>
-      <v-btn @click="method" icon>
+    
+      <Language class="col-md-2 col-sm-1 mr-md-10" />
+
+      <AccountMenuIcon></AccountMenuIcon>
+
+      <v-btn v-show="this.isUserLoggedIn" @click="() =>
+            $router.push({
+              name: 'cart',
+            })" icon>
         <v-badge
-          content="2"
-          value="2"
-          color="green"
-          overlap
-        >
-          <v-icon>mdi-bell</v-icon>
-        </v-badge>
-      </v-btn>
-      <v-btn @click="cartHandler" href="#" icon>
-        <v-badge
-          content="5"
-          value="5"
+          :content="this.cartItemsNumber"
+          :value="this.cartItemsNumber"
           color="green"
           overlap
         >
           <v-icon>mdi-cart</v-icon>
         </v-badge>
-      </v-btn>
+      </v-btn>      
     </v-app-bar>
     <v-main>
       <v-bottom-navigation
@@ -50,7 +44,64 @@
         color="primary"
         horizontal
       >
-        <a href="/" class="v-btn">
+
+      <div class="my-auto" v-for="(menuItem,index) of mainNavigation" :key="index">
+        <v-btn 
+          v-if="menuItem.subItems.length == 0 && (menuItem.shouldBeLoggedIn == String(isUserLoggedIn) || menuItem.shouldBeLoggedIn == 'false')"
+          x-large
+          dark
+          text
+          tile
+          class="text-body-1"
+          @click="
+            () =>
+              $router.push({
+                name: menuItem.routeName
+              })
+          "
+        >
+          <!-- <v-icon small class="mr-1" left>{{menuItem.icon}}</v-icon> -->
+          {{translateName(menuItem.name, menuItem.translatePath)}}
+          <!-- {{ menuItem.name}} -->
+        </v-btn>
+        <v-menu
+        v-else-if="menuItem.subItems.length > 0 && (menuItem.shouldBeLoggedIn == String(isUserLoggedIn) || menuItem.shouldBeLoggedIn == 'false')" 
+        open-on-hover :close-on-content-click="true" offset-y>
+        <template v-slot:activator="{ on }">
+            <v-btn
+              small
+              v-on="on"
+              dark
+              text
+              tile
+              class="text-body-1"
+            >
+              <!-- <v-icon small class="mr-1" left>{{menuItem.icon}}</v-icon> -->
+              {{translateName(menuItem.name, menuItem.translatePath)}}
+              <!-- {{ menuItem.name }} -->
+              <!-- <v-icon right x-small class="ml-0 mr-2">keyboard_arrow_down</v-icon> -->
+            </v-btn>
+          </template>
+          <v-list dense class="text-caption">
+              <!-- v-useCase="subMenuItem.useCase" -->
+            <v-list-item
+              v-for="(subMenuItem,subMenuIndex) of menuItem.subItems"
+              :key="subMenuIndex"
+              exact
+              @click="handleSubMenuItemRoute(subMenuItem)"
+            >
+              <!-- <v-list-item-icon class="mr-2">
+                <v-icon color="primary">{{subMenuItem.icon}}</v-icon>
+              </v-list-item-icon> -->
+              <!-- <v-list-item-content>{{ translateName(subMenuItem.content, menuItem.translatePath) }}</v-list-item-content> -->
+              <v-list-item-content>{{ subMenuItem.name }}</v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div>
+
+
+        <!-- <a href="/" class="v-btn">
           <span>Home</span>
         </a>
         <v-menu open-on-hover offset-y>
@@ -74,11 +125,12 @@
         </v-list-item>
 
           </v-card>
-        </v-menu>
+        </v-menu> -->
 
       </v-bottom-navigation>
+      
+      <router-view :key="$route.path"></router-view>
     </v-main>
-      <router-view/>
     <v-footer
       :padless="true"
     >
@@ -130,31 +182,61 @@
   </v-app>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                items: [
-                    { title: 'T-Shirts' },
-                    { title: 'Jackets' },
-                    { title: 'Shirts' },
-                    { title: 'Jeans' },
-                    { title: 'Shoes' },
-                ],
-                activeBtn: 1,
-            }
-        },
-        computed: {
-          currentYear(){
-            return new Date().getFullYear() + "."
-          }
-        },
-        methods: {
-          method(){
-            console.log("shite")
-          },
-          cartHandler(){
-            
-          }
-        }
+import AccountMenuIcon from '../components/AccountMenuIcon.vue'
+import Language from '../components/Language.vue'
+import navigation from '../resource/navigation.json'
+import { isAuthorized } from '../util/user'
+import translate from '../util/genTable/multilanguageHelper.js'
+import EventBus from '../event-bus.js'
+
+export default {
+  components: {
+    AccountMenuIcon,
+    Language
+  },
+  data () {
+    return {
+        activeBtn: 0,
+        cartItemsNumber: 0,
+        isUserLoggedIn: isAuthorized(),
     }
+  },
+  computed: {
+    currentYear(){
+      return new Date().getFullYear() + "."
+    },
+    mainNavigation() {
+      return navigation.mainNavigation;
+    }
+  },
+  methods: {
+    translateName(toTranslate, source) {
+      return translate(toTranslate, source)
+    },
+  },
+  created() {
+    EventBus.$on('logged', () => {
+      this.isUserLoggedIn = isAuthorized()
+    })
+    EventBus.$on('logout', () => {
+      this.isUserLoggedIn = isAuthorized()
+    })
+
+  }
+  // beforeMount() {
+  //   this.$http.get("cartItems/getTotalNumber")
+  //   .then(response => {
+  //     if(response.data.totalNumber > 0) {
+  //       this.cartItemsNumber = response.data.totalNumber
+  //     }
+  //   })
+  //   .catch(err => console.log(err));
+  // }
+}
 </script>
+
+<style>
+.padding-bottom {
+  padding-bottom: 100px;
+}
+</style>

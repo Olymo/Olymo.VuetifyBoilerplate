@@ -1,115 +1,124 @@
 <template>
-  <v-container>
+  <div>
+    <v-container class="padding-bottom">
 
-    <!-- <v-data-table
-      :headers="headers"
-      :items="products"
-      class="elevation-1"
-    >
-      <template v-slot:item.image="{ item }">
-        <v-img :src="item.image" :alt="item.name" height="100px"></v-img>
-      </template>
+      <h1 class="text-center pa-4">Shopping cart</h1>
+      <v-row v-if="this.cartItems.length > 0">
+        <v-col :cols="12" md="9" sm="12" >
+          <v-simple-table>
+            <template v-slot:default>
+              <thead>
+              <tr>
+                <th class="text-center">ITEM</th>
+                <th class="text-center">PRICE</th>
+                <th class="text-center">QUANTITY</th>
+                <th class="text-center">TOTAL</th>
+                <th class="text-center"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="(cartItem, index) in cartItems" v-bind:key="cartItem.id">
+                <td>
+                  <v-list-item
+                   :key="index"
+                >
+                  <v-list-item-avatar>
+                    <v-img :src="require('../assets/img/shop/1.jpg')"></v-img>
+                  </v-list-item-avatar>
 
-      <template v-slot:item.price="{ item }">
-          <div class="p-2">${{ item.price }}</div>
-      </template>
-
-      <template v-slot:item.quantity="{ item }">
-          <v-text-field
-            v-model="item.quantity"
-            name="quantity"
-            @blur="updateQuantity($event.target.value, item.id)"
-            type="number"
-          ></v-text-field>
-
-      </template>
-
-      <template v-slot:item.action="{ item }">
-        <v-btn color="error" @click="removeProductFromCart($event.target.parentElement.parentElement.parentElement, item.id)">Delete</v-btn>
-      </template>
-
-    </v-data-table> -->
-
-    <div v-if="this.cartItems.length > 0">
-
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th>No #</th>
-              <th>Product Name</th>
-              <th>Image</th>
-              <th>Price</th>
-              <th>Qauntity</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(cartProduct, index) in cartItems" v-bind:key="cartProduct.id">
-              <td>{{ index + 1 }}</td>
-              <td>{{ cartProduct.productName }}</td>
-              <td><img src="https://via.placeholder.com/150" alt="cartProduct.productName" /></td>
-              <td>${{ cartProduct.price }}</td>
-              <td><v-text-field
-                v-model="cartProduct.quantity"
-                name="quantity"
-                @blur="updateQuantity($event.target.value, cartProduct)"
-                type="number"
-              ></v-text-field></td>
-              <td><v-btn color="error" @click="removeProductFromCart(cartProduct.id)">Delete</v-btn></td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-
-      <div class="mt-10">
-        <div class="row">
-          <div class="offset-md-8 col-md-4 col-sm-12 grey lighten-4 black--text text-right">
-            <div>Total price: ${{ totalPrice }}</div>
-            <div>
-              <router-link :to="{ name: 'checkout' }" class="pl-5" >Continue to checkout</router-link>
-            </div>
+                  <v-list-item-content>
+                    <v-list-item-title >{{ cartItem.productName }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item></td>
+                <td>${{ cartItem.price }}</td>
+                <td>
+                  <div small class="pt-3">Available: {{ cartItem.totalAvailable }}</div>
+                  <v-text-field
+                    class="pt-3"
+                    label="Outlined"
+                    style="width: 80px;"
+                    single-line
+                    outlined
+                    v-model="cartItem.quantity"
+                    @blur="updateQuantity($event.target.value, cartItem)"
+                    type="number"
+                    min="1"
+                    :max="cartItem.totalAvailable"
+                  ></v-text-field>
+                </td>
+                <td>${{ cartItem.price * cartItem.quantity }}</td>
+                <td><v-btn color="error" @click="removeProductFromCart(cartItem.id)">Delete</v-btn></td>
+              </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </v-col>
+        <v-col :cols="12" md="3" sm="12" style="background-color: lightgray">
+          <p class="headline">Order Summary</p>
+          <p class="overline">Shipping and additional costs are calculated based on values you have entered.
+          </p>
+          <v-simple-table>
+            <template v-slot:default>
+              <tbody>
+              <tr>
+                <td>Order Subtotal</td>
+                <td class="text-right" style="width: 50px;">${{ orderSubTotal }}</td>
+              </tr>
+              <tr>
+                <td>Shipping Charges</td>
+                <td class="text-right" style="width: 50px;">$10.00</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td class="text-right" style="width: 50px;"><b>${{ orderSubTotal + 10}}</b></td>
+              </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+          <div class="text-center">
+            <v-btn class="primary white--text mt-5" outlined @click="() => $router.push('checkout')">PROCEED TO PAY</v-btn>
           </div>
-        </div>
-      </div>
+        </v-col>
+      </v-row>
 
-    </div>
-
-    <div v-else>
-      <h1>You cart is empty, go to products page.</h1>
-    </div>
-
-    <!-- <v-alert
-      color="grey lighten-4"
-      class="mt-10 black--text text-right"
-    >Total price: ${{ totalPrice }}</v-alert> -->
-
-  </v-container>
+      <v-row v-else>
+          <p class="display-1 font-weight-light	text-center pa-4">You cart is empty, go to products page.</p>
+      </v-row>
+    </v-container>
+  </div>
 </template>
-
 <script>
+import { required, regex } from 'vee-validate/dist/rules'
+import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+
+setInteractionMode('eager')
+
+extend('required', {
+  ...required,
+  message: '{_field_} can not be empty',
+})
+
+extend('regex', {
+  ...regex,
+  message: '{_field_} {_value_} does not match {regex}',
+})
 
 export default {
-  name: "Cart",
-
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   data: () => ({
-    headers: [
-      {
-        text: 'No. #',
-        align: 'center',
-        value: 'no',
-      },
-      { text: 'Product name', value: 'productName' },
-      { text: 'Image', value: 'image', sortable: false },
-      { text: 'Price', value: 'price' },
-      { text: 'Quantity', value: 'quantity' },
-      { text: 'Action', value: 'action', sortable: false },
-    ],
     cartItems: [],
-    totalPrice: 0,
+    orderSubTotal: 0,
   }),
   methods: {
       updateQuantity(quantity, cartItem) {
+        if(quantity > cartItem.totalAvailable) {
+          cartItem.quantity = cartItem.totalAvailable;
+          return
+        }
+
         this.$http.put("cartItems", {
             quantity,
             cartItemId: cartItem.id,
@@ -119,7 +128,14 @@ export default {
             console.log(res);
             this.calculateTotalPrice();
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          let errObj = {};
+          for (const el of err.response.data.errors) {
+            let key = el.PropertyName.toLowerCase();
+            errObj[key] = el.Error
+          }
+          this.$refs.observer.setErrors(errObj);
+        });
           
       },
       removeProductFromCart(cartItemId) {
@@ -134,16 +150,15 @@ export default {
 
       },
       calculateTotalPrice() {
-        this.totalPrice = 0;
+        this.orderSubTotal = 0;
         this.cartItems.forEach(el => {
-          this.totalPrice += el.quantity * el.price;
+          this.orderSubTotal += el.quantity * el.price;
         });
       }
   },
   beforeCreate: function() {
     this.$http.get("cartItems")
       .then(response => {
-        console.log(response)
         this.cartItems = response.data;
 
         this.calculateTotalPrice();
@@ -153,10 +168,3 @@ export default {
 }
 </script>
 
-<style>
-
-.v-data-table-header span {
-    color: #000 !important;
-}
-
-</style>

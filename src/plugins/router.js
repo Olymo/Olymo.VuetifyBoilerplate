@@ -8,16 +8,21 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        beforeEnter: (to, from, next) => {
-            next({ path: '/products' })
-        }
+        // beforeEnter: (to, from, next) => {
+        //     next({ path: '/products' })
+        // }
+        meta: {
+            title: 'Home'
+        },
+        component: () =>
+            import(/* webpackChunkName: "products-page" */ '../components/Home')
     },
     {
         path: '/login',
         name: 'login',
         meta: {
             title: 'Login',
-            layout: 'no-navigation'
+            // layout: 'no-navigation'
         },
         component: () =>
             import(/* webpackChunkName: "login-page" */ '../components/Login'),
@@ -34,7 +39,7 @@ const routes = [
         name: 'register',
         meta: {
             title: 'Register',
-            layout: 'no-navigation'
+            // layout: 'no-navigation'
         },
         component: () =>
             import(/* webpackChunkName: "register-page" */ '../components/Register'),
@@ -92,6 +97,33 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: "orders-page" */ '../components/Orders')
     },
+    {
+        path: '/profile',
+        name: 'profile',
+        meta: {
+            title: 'Profile'
+        },
+        component: () =>
+            import(/* webpackChunkName: "orders-page" */ '../components/Profile')
+    },
+    {
+        path: '/contact',
+        name: 'contact',
+        meta: {
+            title: 'Contact'
+        },
+        component: () =>
+            import(/* webpackChunkName: "orders-page" */ '../components/Contact')
+    },
+    {
+        path: '/logout',
+        name: 'logout',
+        meta: {
+            title: 'Logout'
+        },
+        component: () =>
+            import(/* webpackChunkName: "orders-page" */ '../components/Logout')
+    },
 
     {
         path: '/404',
@@ -124,7 +156,7 @@ router.beforeEach((to, from, next) => {
         '/register',
         '/404',
         '/products',
-        '/cart'
+        '/contact'
     ]
     const loggedIn = isAuthorized()
     const authRequired = !publicPages.includes(to.path)

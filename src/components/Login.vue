@@ -1,9 +1,9 @@
 <template>
-    <v-container fluid fill-height class="loginContainer"> <!-- class="loginOverlay" -->
+    <v-container fluid fill-height class="loginContainer padding-bottom"> <!-- class="loginOverlay" -->
       <v-layout flex align-center justify-center>
         <v-flex xs12 sm4 elevation-6>
           <v-toolbar class="blue darken-4">
-            <v-toolbar-title class="white--text"><h4>Welcome Back</h4></v-toolbar-title>
+            <v-toolbar-title class="white--text"><h4>{{ welcomeBack}}</h4></v-toolbar-title>
           </v-toolbar>
           <v-card>
             <v-card-text class="pt-4 pb-4">
@@ -29,14 +29,14 @@
                         <validation-provider
                         v-slot="{ errors }"
                         name="Password"
-                        rules="required|min:3"
+                        rules="required|min:5"
                         >
                           <!-- :counter="6" -->
                           <v-text-field
                               v-model="user.password"
                               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                               :type="showPassword ? 'text' : 'password'"
-                              hint="At least 3 characters"
+                              hint="At least 5 characters"
                               :error-messages="errors"
                               label="Password"
                               required
@@ -44,19 +44,26 @@
                           ></v-text-field>
                         </validation-provider>
 
+                        <div v-if="showWrongCredsError" class="red--text mb-6">{{ wrongCredsError }}</div>
+
                         <v-btn
                           class="mr-4"
                           type="submit"
                           :disabled="invalid"
                           >
-                          submit
+                          {{ submitText }}
                         </v-btn>
 
-                        <v-btn @click="clear">
-                          clear
+                        <v-btn @click="clear" class="mr-4">
+                          {{ clearText }}
                         </v-btn>
                         
-                        <router-link :to="{ name: 'register' }" class="pl-5" >Register here</router-link>
+                        <v-btn @click="() =>
+                          $router.push({
+                            name: 'register',
+                          })">
+                          {{ registerText }}
+                        </v-btn>
                     </form>
                 </validation-observer>
               </div>
@@ -73,6 +80,8 @@ import { required, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 import httpClient from "../util/httpClient";
 import { decodeJwtToken, isAuthorized } from '../util/user';
+import translate from '../util/genTable/multilanguageHelper.js'
+import EventBus from '../event-bus.js'
 
 setInteractionMode('eager')
 
@@ -98,6 +107,12 @@ export default {
       password: '',
     },
     showPassword: false,
+    showWrongCredsError: false,
+    wrongCredsError: translate('Failed', 'login'),
+    welcomeBack: translate('Welcome Back', 'welcome'),
+    submitText: translate('Submit', 'forms'),
+    clearText: translate('Clear', 'forms'),
+    registerText: translate('Register', 'nav'),
   }),
 
   methods: {
@@ -106,18 +121,13 @@ export default {
 
       this.$http.post("account/locallogin", this.user)
       .then(res => {
-        console.log(res);
-
         localStorage.setItem("tokens", JSON.stringify(res.data));
-
-        let actorData = decodeJwtToken();
-        console.log(actorData);
-
+        
+        EventBus.$emit('logged', 'User logged')
         this.$router.push('/products');
-
       })
       .catch(err => {
-        alert("Wrong combination of username/pass.");
+        this.showWrongCredsError = true;
       });
 
     },
@@ -126,17 +136,8 @@ export default {
       this.password = ''
       this.$refs.observer.reset()
 
-      let result = isAuthorized();
-      console.log(result);
-
-      this.$http.get("account/checkAuthorization")
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
     },
   },
-  // created() {
-  //   localStorage.clear();
-  // }
 }
 </script>
 

@@ -60,5 +60,95 @@
         }
       ]
     }
+  ],
+  "mainNavigation": [
+    {
+      "useCase" : "None",
+      "name": "Home",
+      "icon": "",
+      "translatePath": "nav",
+      "routeName": "home",
+      "subItems": [],
+      "data":[],
+      "shouldBeLoggedIn": "false"
+    },
+    {
+      "useCase" : "SearchProducts",
+      "name": "Products",
+      "icon": "",
+      "translatePath": "nav",
+      "routeName": "products",
+      "subItems": [
+        { "name": "T-Shirts" },
+        { "name": "Jackets" },
+        { "name": "Shirts" },
+        { "name": "Jeans" },
+        { "name": "Shoes" }
+      ],
+      "data": [],
+      "shouldBeLoggedIn": "false"
+    },
+    {
+      "useCase" : "SearchOrders",
+      "name": "Orders",
+      "icon": "",
+      "translatePath": "nav",
+      "routeName": "orders",
+      "subItems": [],
+      "data":[],
+      "shouldBeLoggedIn": "true"
+    },
+    {
+      "useCase" : "None",
+      "name": "Contact us",
+      "icon": "",
+      "translatePath": "nav",
+      "routeName": "contact",
+      "subItems": [],
+      "data":[],
+      "shouldBeLoggedIn": "false"
+    }
+  ],
+  "accountLinks": [
+    {
+      "useCase" : "None",
+      "name": "Register",
+      "icon": "",
+      "translatePath": "nav",
+      "routeName": "register",
+      "subItems": [],
+      "data":[],
+      "shouldBeLoggedIn": "false"
+    },
+    {
+      "useCase" : "None",
+      "name": "Login",
+      "icon": "",
+      "translatePath": "nav",
+      "routeName": "login",
+      "subItems": [],
+      "data":[],
+      "shouldBeLoggedIn": "false"
+    },
+    {
+      "useCase" : "None",
+      "name": "Profile",
+      "icon": "",
+      "translatePath": "nav",
+      "routeName": "profile",
+      "subItems": [],
+      "data":[],
+      "shouldBeLoggedIn": "true"
+    },
+    {
+      "useCase" : "None",
+      "name": "Logout",
+      "icon": "",
+      "translatePath": "nav",
+      "routeName": "logout",
+      "subItems": [],
+      "data":[],
+      "shouldBeLoggedIn": "true"
+    }
   ]
 }

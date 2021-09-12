@@ -26,7 +26,7 @@ export default {
       orderStatusses: ["Received", "Shipped", "Delivered", "Canceled"], 
       headers: [
         // { text: 'No. #', align: 'center', value: 'no' },
-        { text: 'User Id', value: 'userId' },
+        { text: 'User name', value: 'userFullName' },
         { text: 'Address', value: 'address' },
         { text: 'Order date', value: 'orderDate' },
         { text: 'Order status', value: 'orderStatus', sortable: false },

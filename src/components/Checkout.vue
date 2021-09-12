@@ -3,6 +3,7 @@
         <h1>Checkout</h1>
         <div class="row">
             <div class="col-md-6">
+                <div v-show="orderState" class="text-h6 py-3">{{ orderMessage }}</div>
                 <validation-observer
                 ref="observer"
                 v-slot="{ invalid }"
@@ -81,6 +82,7 @@ import { required, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 import httpClient from '../util/httpClient'
 import { getActorData } from '../util/user'
+import translate from '../util/genTable/multilanguageHelper.js'
 
 setInteractionMode('eager')
 
@@ -106,19 +108,27 @@ export default {
         email: '',
         phoneNumber: '',
         address: '',
+        orderMessage: translate("Success", "order"),
+        orderState: false,
     }),
     methods: {
       submit() {
         this.$refs.observer.validate();
         
         httpClient.post('orders', {
-          address: this.address
+          userFullName: this.name,
+          userEmail: this.email,
+          address: this.address,
+          phoneNumber: this.phoneNumber
         })
         .then(response => {
-            alert("Uspesan order");
-            console.log(response)
+            // alert("Uspesan order");
+            this.orderState = true;
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          this.orderState = true;
+          this.orderMessage = translate("Failed", "order");
+        });
       }
     },
     beforeCreate: function() {
