@@ -1,3 +1,51 @@
 {
-    "test": "Test na srpskom"
+  "test": "Test na srpskom",
+  "welcome": {
+    "Message": "Dobrodošli na našu aplikaciju.",
+    "Welcome Back": "Dobrodošli nazad"
+  },
+  "addNew": "Novi zapis",
+  "restTable": {
+      "delete": "Brisanje zapisa",
+      "create": "Novi zapis",
+      "edit": "Izmena zapisa",
+      "allRecords": "Svi",
+      "perPage": "Zapisa po strani",
+      "welcome": "Dobrodošli nazad"
+    },
+  "confirmDelete": "Are you confirming the delete process?",
+  "yes" : "Da",
+  "no": "Ne",
+  "nav": {
+    "Home": "Početna strana",
+    "Logout": "Odjavi se",
+    "Login": "Prijavi se",
+    "Register": "Registruj se",
+    "Products": "Proizvodi",
+    "Orders": "Porudžbine",
+    "Profile": "Profil",
+    "Contact us": "Kontakt"
+  },
+  "forms": {
+    "Submit": "Pošalji",
+    "Clear": "Očisti"
+  },
+  "login": {
+    "Failed": "Korisničko ime i lozinka se ne poklapaju."
+  },
+  "order": {
+    "Success": "Vaša porudžbina je primljena!",
+    "Failed": "Došlo je do greške. Molimo pokušajte ponovo."
+  },
+  "profile": {
+    "Update": "Ažurirajte",
+    "Profile Settings": "Podešavanja profila"
+  },
+  "contact": {
+    "Send": "Pošalji",
+    "Send us an email": "Posaljite nam mejl",
+    "Email sent successfully.": "Email je uspešno poslat.",
+    "An error has occurred": "Došlo je do greške, molimo pokušajte ponovo."
+  }
+
 }

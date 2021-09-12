@@ -1,6 +1,9 @@
 {
     "test" : "Test na engleskom",
-    "welcomeMessage" : "Welcome to our application.",
+    "welcome": {
+        "Message": "Welcome to our application.",
+        "Welcome Back": "Welcome back."
+    },
     "addNew": "Add new item",
     "restTable" : {
         "perPage": "Items per page",
@@ -10,5 +13,26 @@
     },
     "confirmDelete": "Are you confirming the delete process?",
     "yes" : "Yes",
-    "no": "No"
+    "no": "No",
+    "nav": {
+        "Home": "Home",
+        "Logout": "Log out",
+        "Login": "Log in",
+        "Register": "Register",
+        "Products": "Products",
+        "Orders": "Orders",
+        "Profile": "Profile",
+        "Contact us": "Contact us"
+    },
+    "forms": {
+        "Submit": "Submit",
+        "Clear": "Clear"
+      },
+    "login": {
+        "Failed": "Wrong combination of username and password."
+    },
+    "order": {
+        "Success": "Your order has been successfully received!",
+        "Failed": "We encountered some issues. Try again in a few moments."
+    }
 }

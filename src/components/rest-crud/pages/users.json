@@ -1,0 +1,103 @@
+{
+    "resource": "/users",
+    "useCases": {
+        "insert": "AddUser",
+        "search": "SearchUsers",
+        "update": "UpdateUser",
+        "delete": "DeleteUser"
+      },
+    "insertFields": [
+        {
+            "key":"name",
+            "label":"$firstLastName",
+            "rules":"required",
+            "cols":{ "sm": 12, "lg" : 6}
+        },
+        {
+            "key":"username",
+            "label":"$username",
+            "rules":"required",
+            "cols":{ "sm": 12, "lg" : 6}
+        },
+        {
+            "key":"email",
+            "label":"$email",
+            "rules":"required|email",
+            "cols":{ "sm": 12}
+        },
+        {
+            "key":"password",
+            "label":"$password",
+            "rules":"required",
+            "component": "v-password-field",
+            "type": "password",   
+            "cols":{ "sm": 12}
+        },
+       
+        {
+            "key":"roleUsersIds",
+            "label":"$roles",
+            "cols":{ "sm": 12},
+            "component":"v-autocomplete",
+            "props":{
+                "multiple":true
+            },
+            "dataSource":{
+                "endpoint":"/roles"
+            }
+        }
+      ],
+      "updateFields": [
+        {
+            "key":"name",
+            "label":"$name",
+            "rules":"required",
+            "cols":{ "sm": 12, "lg" : 6}
+        },
+        {
+            "key":"username",
+            "label":"$username",
+            "rules":"required",
+            "cols":{ "sm": 12, "lg" : 6}
+        },
+        {
+            "key":"email",
+            "label":"$email",
+            "rules":"required|email",
+            "cols":{ "sm": 12}
+        },
+        {
+            "key":"password",
+            "label":"$password",
+            "component": "v-password-field",
+            "type": "password",
+            "cols":{ "sm": 12}
+        }
+        ,
+        {
+            "key":"roleUsersIds",
+            "label":"$roles",
+            "cols":{ "sm": 12},
+            "component":"v-autocomplete",
+            "props":{
+                "multiple":true
+            },
+            "dataSource":{
+                "endpoint":"/roles"
+            }
+        }
+      ],
+      "processDataOn": "client",
+      "sorts": {
+        "lastLoginTime": "date"
+      },
+      "headers": [
+        { "text": "$name", "value": "name" },
+        { "text": "$username", "value": "username" },
+        { "text": "$lastLoginTime", "value": "lastLoginTime" },
+        { "text": "$roles", "value": "roleNames" }
+        
+      ]
+      
+
+}

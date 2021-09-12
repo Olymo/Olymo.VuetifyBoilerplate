@@ -2,7 +2,7 @@ import axios from "axios";
 import i18n from "../plugins/i18n/i18n";
 
 const httpClient = axios.create({
-  baseURL: "http://vozila.olymo.net:5111/api/",
+  baseURL: "http://localhost:5010/api/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,8 +13,13 @@ const httpClient = axios.create({
  * Here we are creating an `auth` intercaptor to inject headers.
  */
 const getAuthToken = () =>
-  localStorage.getItem("user") != null
-    ? `Bearer ${JSON.parse(localStorage.getItem("user")).accessToken}`
+  localStorage.getItem("tokens") != null
+    ? `Bearer ${JSON.parse(localStorage.getItem("tokens")).accessToken}`
+    : "";
+
+export const getRefreshToken = () =>
+  localStorage.getItem("tokens") != null
+    ? JSON.parse(localStorage.getItem("tokens")).refreshToken
     : "";
 
 const getLanguage = () => i18n.locale;
@@ -31,61 +36,53 @@ httpClient.interceptors.request.use(authInterceptor);
 // /**
 //  * Handling network errors and logging
 //  */
-// const errorInterceptor = error => {
-//   switch (error.response.status) {
-//     case 401:
-//       var originalRequest = error.config
+const errorInterceptor = error => {
+  switch (error.response.status) {
+    case 401:
+      var originalRequest = error.config;
 
-//       if (originalRequest.url.includes('refreshToken')) {
-//         store.dispatch('user/logout')
-//         store.dispatch(
-//           'notification/add',
-//           {
-//             type: 'warning',
-//             message: 'Your session has expired. Please login again.'
-//           },
-//           {
-//             root: true
-//           }
-//         )
+      var refreshToken = getRefreshToken();
 
-//         window.location = '/login'
-//         return Promise.reject(error)
-//       }
+      if(!refreshToken) {
+        //window.location = "/login"
+        return Promise.reject(error)
+      }
 
-//       if (!originalRequest._retry) {
-//         originalRequest._retry = true
+      if(!originalRequest._retry) {
+        originalRequest._retry = true
 
-//         var refreshToken = JSON.parse(window.localStorage.getItem('user'))
-//           .refreshToken
+        httpClient.post("account/RefreshToken", {
+            refreshToken
+          })
+          .then(res => {
+              localStorage.setItem("tokens", JSON.stringify(res.data));
+  
+              originalRequest.headers.Authorization = getAuthToken();
+  
+              return httpClient(originalRequest);
+          })
+          .catch(err => {
+              console.log(err);
+  
+              localStorage.removeItem("tokens");
+  
+              return Promise.reject(error);
+          });
 
-//         return httpClient
-//           .post('/account/refreshToken', {
-//             refreshToken
-//           })
-//           .then(res => {
-//             if (res.status === 200) {
-//               window.localStorage.setItem('user', JSON.stringify(res.data))
+      }
+      
+      break
+    default:
+      console.error(error.response.status, error.message)
+  }
 
-//               originalRequest.headers.Authorization = getAuthToken()
-
-//               return httpClient(originalRequest)
-//             }
-//           })
-//       }
-
-//       break
-//     default:
-//       console.error(error.response.status, error.message)
-//   }
-
-//   return Promise.reject(error)
-// }
+  return Promise.reject(error)
+}
 
 const responseInterceptor = (response) => {
   return response;
 };
 
-httpClient.interceptors.response.use(responseInterceptor);
+httpClient.interceptors.response.use(responseInterceptor, errorInterceptor); 
 
 export default httpClient;
