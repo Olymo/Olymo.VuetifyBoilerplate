@@ -49,7 +49,7 @@ export default {
       type: Function,
       required: false
     },
-    class: {
+    classs: {
       true: String,
       required: false
     },

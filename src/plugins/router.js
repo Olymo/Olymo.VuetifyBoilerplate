@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { isAuthorized, getActorData } from "../util/user";
+import { isAuthorized, allowedUseCaseIds } from "../util/user";
 
 Vue.use(VueRouter)
 
@@ -8,21 +8,17 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        // beforeEnter: (to, from, next) => {
-        //     next({ path: '/products' })
-        // }
         meta: {
             title: 'Home'
         },
         component: () =>
-            import(/* webpackChunkName: "products-page" */ '../components/Home')
+            import(/* webpackChunkName: "home-page" */ '../components/Home')
     },
     {
         path: '/login',
         name: 'login',
         meta: {
             title: 'Login',
-            // layout: 'no-navigation'
         },
         component: () =>
             import(/* webpackChunkName: "login-page" */ '../components/Login'),
@@ -39,7 +35,6 @@ const routes = [
         name: 'register',
         meta: {
             title: 'Register',
-            // layout: 'no-navigation'
         },
         component: () =>
             import(/* webpackChunkName: "register-page" */ '../components/Register'),
@@ -86,7 +81,7 @@ const routes = [
             title: 'Checkout'
         },
         component: () =>
-            import(/* webpackChunkName: "cart-page" */ '../components/Checkout')
+            import(/* webpackChunkName: "checkout-page" */ '../components/Checkout')
     },
     {
         path: '/orders',
@@ -104,7 +99,7 @@ const routes = [
             title: 'Profile'
         },
         component: () =>
-            import(/* webpackChunkName: "orders-page" */ '../components/Profile')
+            import(/* webpackChunkName: "profile-page" */ '../components/Profile')
     },
     {
         path: '/contact',
@@ -113,7 +108,7 @@ const routes = [
             title: 'Contact'
         },
         component: () =>
-            import(/* webpackChunkName: "orders-page" */ '../components/Contact')
+            import(/* webpackChunkName: "contact-page" */ '../components/Contact')
     },
     {
         path: '/logout',
@@ -122,7 +117,7 @@ const routes = [
             title: 'Logout'
         },
         component: () =>
-            import(/* webpackChunkName: "orders-page" */ '../components/Logout')
+            import(/* webpackChunkName: "logout-page" */ '../components/Logout')
     },
 
     {
@@ -132,8 +127,7 @@ const routes = [
             import(/* webpackChunkName: "not-found-page" */ '../views/NotFound'),
         // props: true,
         meta: {
-            title: 'Page not found - 404',
-            layout: 'no-navigation'
+            title: 'Page not found - 404'
         }
     },
     {
@@ -169,18 +163,10 @@ router.beforeEach((to, from, next) => {
         document.title = to.meta.title
     } else {
         document.title = 'Vuetify Boilerplate'
-    }
+    }    
 
-    let allowedUseCaseIds = []
-    let actor = getActorData();
-
-
-    if (actor != null) {
-        allowedUseCaseIds = actor.AllowedUseCaseIds
-    }
-
-    if (to.params.useCase) {
-        if (!allowedUseCaseIds.includes(to.params.useCase)) {
+    if (to.name == "admin" || to.params.useCase) {
+        if (!allowedUseCaseIds().includes(to.params.useCase)) {
             next('/')
         } else {
             next()

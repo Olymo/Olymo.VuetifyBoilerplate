@@ -26,14 +26,19 @@
             "cols":{ "sm": 12}
         },
         {
+            "key":"isAdmin",
+            "label": "$isAdmin",
+            "cols": { "sm": 4, "lg" : 4 },
+            "component":"v-checkbox"
+        },
+        {
             "key":"password",
             "label":"$password",
             "rules":"required",
             "component": "v-password-field",
             "type": "password",   
-            "cols":{ "sm": 12}
-        },
-       
+            "cols":{ "sm": 8}
+        },       
         {
             "key":"roleUsersIds",
             "label":"$roles",
@@ -67,13 +72,18 @@
             "cols":{ "sm": 12}
         },
         {
+            "key":"isAdmin",
+            "label": "$isAdmin",
+            "cols": { "sm": 4, "lg" : 4 },
+            "component":"v-checkbox"
+        },
+        {
             "key":"password",
             "label":"$password",
             "component": "v-password-field",
             "type": "password",
-            "cols":{ "sm": 12}
-        }
-        ,
+            "cols":{ "sm": 8}
+        },        
         {
             "key":"roleUsersIds",
             "label":"$roles",
