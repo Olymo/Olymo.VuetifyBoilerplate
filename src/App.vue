@@ -7,40 +7,34 @@
 <script>
 import { isAuthorized } from "./util/user";
 
-const BaseLayout = () =>
-  import(/* webpackChunkName: "layout-default" */ "./layouts/BaseLayout");
-const NoNavigationLayout = () =>
-  import(
-    /* webpackChunkName: "layout-no-navigation"*/ "./layouts/NoNavigationLayout"
-  );
-const FrontLayout = () =>
-  import(
-    /* webpackChunkName: "layout-no-navigation"*/ "./layouts/FrontLayout"
-  );
+const Layout = () =>
+  import(/* webpackChunkName: "layout-default" */ "./layouts/Layout");
+// const BaseLayout = () =>
+//   import(/* webpackChunkName: "layout-default" */ "./layouts/BaseLayout");
+// const FrontLayout = () =>
+//   import(
+//     /* webpackChunkName: "layout-no-navigation"*/ "./layouts/FrontLayout"
+//   );
 
 export default {
-  components: {
-    NoNavigationLayout,
-    BaseLayout,
-    FrontLayout
+  components: {    
+    Layout,
+    // BaseLayout,
+    // FrontLayout
   },
 
   name: "App",
 
   data: () => ({
     isAuthorized: false,
+    layout: "layout"
   }),
-  computed: {
-    layout() {
-      return `${this.$route.meta.layout || "front"}-layout`;
-    },
-  },
-  mounted() {
-    // this.$http.get("account/CheckAuthorization")
-    //   .then((r) => {
-    //     console.log(r);
-    //   });
-  },
+  // computed: {
+  //   layout() {
+  //     return "layout";
+  //     return `${this.$route.meta.layout || "front"}-layout`;
+  //   },
+  // },  
   created() {
     this.isAuthorized = isAuthorized();
   }

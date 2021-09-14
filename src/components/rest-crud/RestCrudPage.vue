@@ -81,7 +81,7 @@
 import defaults from "./rest-defaults.json";
 import formatDate from "../../util/formatDateHelper.js";
 import dataTableSort from "../../util/dataTableSort.js";
-import { getActorData } from "../../util/user";
+import { allowedUseCaseIds } from "../../util/user";
 
 export default {
   name: "RestCrudPage",
@@ -225,7 +225,7 @@ export default {
       //   store.getters["user/jwtData"].UserData
       // ).AllowedUseCaseIds.includes(useCaseId);
 
-      return getActorData().AllowedUseCaseIds.includes(useCaseName);
+      return allowedUseCaseIds().includes(useCaseName);
     },
     dateFormatter(value, length = "short") {
       if (!value) {

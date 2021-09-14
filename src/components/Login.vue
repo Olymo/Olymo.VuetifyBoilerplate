@@ -79,7 +79,6 @@
 import { required, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
 import httpClient from "../util/httpClient";
-import { decodeJwtToken, isAuthorized } from '../util/user';
 import translate from '../util/genTable/multilanguageHelper.js'
 import EventBus from '../event-bus.js'
 

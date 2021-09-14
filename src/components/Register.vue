@@ -82,8 +82,7 @@
                         <v-btn @click="clear" class="mr-4">
                           {{ clearText }}
                         </v-btn>
-
-                        <!-- <router-link :to="{ name: 'login' }" class="pl-5" >Login</router-link> -->
+                        
                         <v-btn @click="() =>
                           $router.push({
                             name: 'login',
