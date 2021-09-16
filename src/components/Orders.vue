@@ -8,7 +8,7 @@
         class="elevation-1"
       >
         <template v-slot:[`item.orderStatus`]="{ item }">
-          <!-- <span>{{ this.orderStatusses[0] }}</span> -->
+          <span class="mr-5">{{ orderStatusses[item.orderStatus] }}</span>
           <v-btn class="my-2" color="error" @click="cancelOrder(item.id)" :disabled="item.orderStatus != 0">Cancel</v-btn>
         </template>
 
