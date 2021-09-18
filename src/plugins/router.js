@@ -2,6 +2,20 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { isAuthorized, allowedUseCaseIds } from "../util/user";
 
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) {
+      return originalPush.call(this, location, onResolve, onReject)
+  }
+  return originalPush.call(this, location).catch((err) => {
+    if (VueRouter.isNavigationFailure(err) && err.message.includes('Avoided redundant navigation to current location') ) {
+      return err
+    }
+    // rethrow error
+    return Promise.reject(err)
+  })
+}
+
 Vue.use(VueRouter)
 
 const routes = [
