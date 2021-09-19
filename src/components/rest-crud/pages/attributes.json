@@ -1,0 +1,66 @@
+{
+    "resource": "/attributes",
+    "useCases": {
+        "insert": "AddAttribute",
+        "search": "SearchAttributes",
+        "update": "UpdateAttribute",
+        "delete": "DeleteAttribute"
+    },
+    "insertFields": [
+        {
+            "key": "name",
+            "label": "$name",
+            "rules": "required",
+            "cols": {
+                "sm": 12
+            }
+        },
+        {
+            "key": "type",
+            "label": "$type",
+            "component": "v-autocomplete",
+            "rules": "required",
+            "dataSource": [
+                {
+                    "text": "String",
+                    "value": "String"
+                },
+                {
+                    "text": "Int",
+                    "value": "Int"
+                },
+                {
+                    "text": "Decimal",
+                    "value": "Decimal"
+                },
+                {
+                    "text": "Bool",
+                    "value": "Bool"
+                },
+                {
+                    "text": "DateTime",
+                    "value": "DateTime"
+                },
+                {
+                    "text": "Enum",
+                    "value": "Enum"
+                }
+            ],
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        }
+    ],
+    "processDataOn": "client",
+    "headers": [
+        {
+            "text": "$name",
+            "value": "name"
+        },
+        {
+            "text": "$type",
+            "value": "type"
+        }
+    ]
+}

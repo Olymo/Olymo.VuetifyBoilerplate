@@ -54,11 +54,11 @@
                             name="Password"
                             rules="min:5"
                             >
-                            <!-- :counter="6" -->
                             <v-text-field
                                 v-model="password"
                                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                                 :type="showPassword ? 'text' : 'password'"
+                                :counter="5"
                                 hint="At least 5 characters"
                                 :error-messages="errors"
                                 label="Password"

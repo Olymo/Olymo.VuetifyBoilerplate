@@ -14,14 +14,7 @@
           ><v-icon>mdi-truck</v-icon>&nbsp; Boilerplate</a
         >
       </v-toolbar-title>
-      <!-- <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="mdi-magnify"
-        label="Search"
-        class="hidden-sm-and-down pl-10 ml-4"
-      /> -->
+
       <v-spacer />
 
       <Language class="col-md-2 col-sm-1 mr-md-10" />
@@ -73,9 +66,7 @@
                 })
             "
           >
-            <!-- <v-icon small class="mr-1" left>{{menuItem.icon}}</v-icon> -->
             {{ translateName(menuItem.name, menuItem.translatePath) }}
-            <!-- {{ menuItem.name}} -->
           </v-btn>
           <v-menu
             v-else-if="
@@ -89,24 +80,16 @@
           >
             <template v-slot:activator="{ on }">
               <v-btn small v-on="on" dark text tile class="text-body-1">
-                <!-- <v-icon small class="mr-1" left>{{menuItem.icon}}</v-icon> -->
                 {{ translateName(menuItem.name, menuItem.translatePath) }}
-                <!-- {{ menuItem.name }} -->
-                <!-- <v-icon right x-small class="ml-0 mr-2">keyboard_arrow_down</v-icon> -->
               </v-btn>
             </template>
             <v-list dense class="text-caption">
-              <!-- v-useCase="subMenuItem.useCase" -->
               <v-list-item
                 v-for="(subMenuItem, subMenuIndex) of menuItem.subItems"
                 :key="subMenuIndex"
                 exact
                 @click="handleSubMenuItemRoute(subMenuItem)"
               >
-                <!-- <v-list-item-icon class="mr-2">
-                <v-icon color="primary">{{subMenuItem.icon}}</v-icon>
-              </v-list-item-icon> -->
-                <!-- <v-list-item-content>{{ translateName(subMenuItem.content, menuItem.translatePath) }}</v-list-item-content> -->
                 <v-list-item-content>{{
                   subMenuItem.name
                 }}</v-list-item-content>
@@ -128,16 +111,15 @@
               </v-btn>
             </template>
             <v-list dense class="text-caption">
-              <!-- v-useCase="subMenuItem.useCase" -->
               <v-list-item
-                v-for="(menuItem, index) of adminNavigation"                
+                v-for="(menuItem, index) of adminNavigation"
                 :key="index"
                 exact
                 @click="
                   () =>
                     $router.push({
-                      name: menuItem.href.name,
-                      params: menuItem.href.params,
+                      name: 'admin',
+                      params: menuItem.params,
                     })
                 "
               >
@@ -146,32 +128,6 @@
             </v-list>
           </v-menu>
         </div>
-
-        <!-- <a href="/" class="v-btn">
-          <span>Home</span>
-        </a>
-        <v-menu open-on-hover offset-y>
-          <template v-slot:activator="{ on }">
-            <v-btn v-on="on">
-              <span>Products</span>
-            </v-btn>
-          </template>
-          <v-card
-            class="mx-auto"
-            max-width="344"
-            outlined
-          >
-
-        <v-list-item
-            v-for="(item, index) in items"
-            :key="index"
-            href="#"
-        >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-
-          </v-card>
-        </v-menu> -->
       </v-bottom-navigation>
 
       <router-view :key="$route.path"></router-view>
@@ -232,7 +188,7 @@ export default {
       cartItemsNumber: 0,
       isUserLoggedIn: isAuthorized(),
       isAdmin: isAdmin(),
-      allowedUseCaseIds: allowedUseCaseIds()
+      allowedUseCaseIds: allowedUseCaseIds(),
     };
   },
   computed: {
@@ -243,7 +199,9 @@ export default {
       return navigation.mainNavigation;
     },
     adminNavigation() {
-      return navigation.adminCRUD.filter(x => this.allowedUseCaseIds.includes(x.href.params.useCase));
+      return navigation.adminCRUD.filter((x) =>
+        this.allowedUseCaseIds.includes(x.params.useCase)
+      );
     },
   },
   methods: {

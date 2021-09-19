@@ -105,7 +105,14 @@ export default {
     this.pageMetadata = { ...defaults, ...pageData };
     if (this.sorts) {
       dataTableSort.setSorts(this.sorts);
+    }    
+    if(this.pageMetadata.isImageUpload === true) {
+      this.setRulesForImageUpload(this.pageMetadata.insertFields);
+      if(this.pageMetadata.updateFields) {
+        this.setRulesForImageUpload(this.pageMetadata.updateFields);
+      }
     }
+    
     //this.itemsForNavigation = await this.setBreadcrumbs();
   },
   computed: {
@@ -200,10 +207,7 @@ export default {
   methods: {
     useCaseAllowed(useCaseName) {
       console.log(useCaseName);
-      // return true;
-
-      //TODO implement use-casing system
-      // if (useCaseName == "None") {
+      
       if (useCaseName == "NONE") {
         return true;
       }
@@ -213,17 +217,6 @@ export default {
           `Missing use-case. Please review your json config file.`
         );
       }
-      // var useCaseId = useCaseMap[useCaseName];
-
-      // if (!useCaseId) {
-      //   throw new Error(
-      //     `Provided UseCase (${useCaseName}) did not resolve to any use case ID. Plase review your json config file.`
-      //   );
-      // }
-
-      // return JSON.parse(
-      //   store.getters["user/jwtData"].UserData
-      // ).AllowedUseCaseIds.includes(useCaseId);
 
       return allowedUseCaseIds().includes(useCaseName);
     },
@@ -254,6 +247,16 @@ export default {
     capitalizeFirstLetter(string) {
       return string.charAt(0).toLowerCase() + string.slice(1);
     },
+    setRulesForImageUpload(fields) {
+      for(let x of fields) {
+        if(x.component === 'v-file-input' && x.fileType === 'image') {
+          x.props.rules = [
+            v => !v || !v.some(x => x.size > 5e6) || 'File size should be less than 5 MB!',
+            v => !v || !v.some(x => !(['jpg', 'jpeg', 'png'].includes(x.name.split('.').pop()))) || 'Allowed extensions: jpg, jpeg, png'            
+          ]
+        }
+      }
+    }
   },
 };
 </script>

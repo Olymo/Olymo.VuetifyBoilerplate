@@ -4,16 +4,16 @@ import { isAuthorized, allowedUseCaseIds } from "../util/user";
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location, onResolve, onReject) {
-  if (onResolve || onReject) {
-      return originalPush.call(this, location, onResolve, onReject)
-  }
-  return originalPush.call(this, location).catch((err) => {
-    if (VueRouter.isNavigationFailure(err) && err.message.includes('Avoided redundant navigation to current location') ) {
-      return err
+    if (onResolve || onReject) {
+        return originalPush.call(this, location, onResolve, onReject)
     }
-    // rethrow error
-    return Promise.reject(err)
-  })
+    return originalPush.call(this, location).catch((err) => {
+        if (VueRouter.isNavigationFailure(err) && err.message.includes('Avoided redundant navigation to current location')) {
+            return err
+        }
+        // rethrow error
+        return Promise.reject(err)
+    })
 }
 
 Vue.use(VueRouter)
@@ -52,7 +52,7 @@ const routes = [
         },
         component: () =>
             import(/* webpackChunkName: "register-page" */ '../components/Register'),
-        beforeEnter: (to, from, next) => {
+        beforeEnter: (_to, _from, next) => {
             if (isAuthorized()) {
                 next({ name: 'home' })
             } else {
@@ -139,7 +139,6 @@ const routes = [
         name: '404',
         component: () =>
             import(/* webpackChunkName: "not-found-page" */ '../views/NotFound'),
-        // props: true,
         meta: {
             title: 'Page not found - 404'
         }
@@ -157,7 +156,7 @@ const router = new VueRouter({
 })
 
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
     const publicPages = [
         '/',
         '/login',
@@ -172,12 +171,12 @@ router.beforeEach((to, from, next) => {
     next()
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
     if (to.meta.title) {
         document.title = to.meta.title
     } else {
         document.title = 'Vuetify Boilerplate'
-    }    
+    }
 
     if (to.name == "admin" || to.params.useCase) {
         if (!allowedUseCaseIds().includes(to.params.useCase)) {
@@ -191,4 +190,3 @@ router.beforeEach((to, from, next) => {
 })
 
 export default router
-
