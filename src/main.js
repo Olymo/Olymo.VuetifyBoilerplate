@@ -6,6 +6,7 @@ import i18n from "./plugins/i18n/i18n";
 import "./plugins/vee-validate";
 import httpClient from "./util/httpClient";
 import VSelectAll from '@/components/customInputs/VSelectAll'
+import VImageUpload from '@/components/customInputs/VImageUpload'
 import VDateTextBox from '@/components/customInputs/VDateTextBox'
 import UseCasesInput from '@/components/customInputs/UseCasesInput'
 import PasswordField from '@/components/customInputs/PasswordField'

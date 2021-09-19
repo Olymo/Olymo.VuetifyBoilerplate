@@ -1,0 +1,150 @@
+{
+    "resource": "/products",
+    "useCases": {
+        "insert": "AddProduct",
+        "search": "SearchProduct",
+        "update": "UpdateProduct",
+        "delete": "DeleteProduct"
+    },
+    "insertFields": [
+        {
+            "key": "name",
+            "label": "$name",
+            "rules": "required",
+            "cols": {
+                "sm": 12
+            }
+        },
+        {
+            "key": "brandId",
+            "label": "$brand",
+            "component": "v-autocomplete",
+            "rules": "required",
+            "dataSource": {
+                "endpoint": "/brands"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "categoryId",
+            "label": "$category",
+            "rules": "required",
+            "component": "v-autocomplete",
+            "dataSource": {
+                "endpoint": "/categories"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "images",
+            "label": "$images",
+            "component": "v-file-input",
+            "rules": "required",
+            "fileType": "image",
+            "props": {
+                "multiple": true,
+                "accept": "image/png, image/jpeg, image/jpg",
+                "show-size": true,
+                "counter": true,
+                "clearable": true,
+                "chips": true
+            }
+        },
+        {
+            "key": "price",
+            "label": "$price",
+            "rules": "numeric",
+            "type": "number",
+            "cols": {
+                "sm": 6,
+                "lg": 4
+            }
+        }
+    ],
+    "updateFields": [
+        {
+            "key": "name",
+            "label": "$name",
+            "rules": "required",
+            "cols": {
+                "sm": 12
+            }
+        },
+        {
+            "key": "brandId",
+            "label": "$brand",
+            "component": "v-autocomplete",
+            "rules": "required",
+            "dataSource": {
+                "endpoint": "/brands"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "categoryId",
+            "label": "$category",
+            "rules": "required",
+            "component": "v-autocomplete",
+            "dataSource": {
+                "endpoint": "/categories"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "images",
+            "label": "$images",
+            "component": "v-file-input",
+            "fileType": "image",
+            "props": {
+                "multiple": true,
+                "accept": "image/png, image/jpeg, image/jpg",
+                "show-size": true,
+                "counter": true,
+                "clearable": true,
+                "chips": true
+            }
+        },
+        {
+            "key": "price",
+            "label": "$price",
+            "rules": "numeric",
+            "type": "number",
+            "cols": {
+                "sm": 6,
+                "lg": 4
+            }
+        }
+    ],
+    "processDataOn": "client",
+    "isImageUpload": true,
+    "headers": [
+        {
+            "text": "$name",
+            "value": "name"
+        },
+        {
+            "text": "$price",
+            "value": "price"
+        },
+        {
+            "text": "$brand",
+            "value": "brand"
+        },
+        {
+            "text": "$category",
+            "value": "category"
+        }
+    ]
+}
