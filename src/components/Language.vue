@@ -22,25 +22,8 @@
         <v-list-item-content>
           <v-list-item-title v-text="item.title" class="font-weight-medium text-caption"></v-list-item-title>
         </v-list-item-content>
-        <!-- <v-list-item-subtitle>{{ item.title }}</v-list-item-subtitle> -->
       </template>
     </v-autocomplete>
-
-    <!-- <v-dialog v-model="translating" fullscreen hide-overlay>
-      <v-card flat tile>
-        <v-card-text class="centered" v-if="translating">
-          <img class="pa-1" height="64" width="64" :src="require(`@/assets/${oldFlag}.png`)" />
-
-          <div>
-            <p>
-              <i class="fa fa-angle-down fa-4x animated"></i>
-            </p>
-          </div>
-
-          <img class="pa-1" height="64" width="64" :src="require(`@/assets/${newFlag}.png`)" />
-        </v-card-text>
-      </v-card>
-    </v-dialog> -->
   </div>
 </template>
 
