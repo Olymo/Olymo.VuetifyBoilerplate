@@ -1,85 +1,60 @@
 {
   "adminCRUD": [
     {
-      "href": {
-        "name": "admin",
-        "params": {
-          "page": "roles",
-          "useCase": "SearchRoles"
-        }
+      "params": {
+        "page": "roles",
+        "useCase": "SearchRoles"
       },
-      "title": "Roles"      
+      "title": "Roles"
     },
     {
-      "href": {
-        "name": "admin",
-        "params": {
-          "page": "brands",
-          "useCase": "SearchBrands"
-        }
+      "params": {
+        "page": "brands",
+        "useCase": "SearchBrands"
       },
-      "title": "Brands"      
+      "title": "Brands"
     },
     {
-      "href": {
-        "name": "admin",
-        "params": {
-          "page": "users",
-          "useCase": "SearchUsers"
-        }
+      "params": {
+        "page": "attributes",
+        "useCase": "SearchAttributes"
       },
-      "title": "Users"      
+      "title": "Attributes"
     },
     {
-      "href": {
-        "name": "admin",
-        "params": {
-          "page": "superadmins",
-          "useCase": "SearchSuperAdmins"
-        }
+      "params": {
+        "page": "categories",
+        "useCase": "SearchCategory"
       },
-      "title": "Super Admins"      
-    }
-  ],  
-  "menu": [
+      "title": "Categories"
+    },
     {
-      "title": "Admin",
-      "icon": "fa fa-cog",
-      "child": [
-        {
-          "href": {
-            "name": "admin",
-            "params": {
-              "page": "roles",
-              "useCase": "SearchRoles"
-            }
-          },
-          "title": "Roles",
-          "icon": "fa fa-code"
-        },
-        {
-          "href": {
-            "name": "admin",
-            "params": {
-              "page": "brands",
-              "useCase": "SearchBrands"
-            }
-          },
-          "title": "Brands",
-          "icon": "fa fa-code"
-        },
-        {
-          "href": {
-            "name": "admin",
-            "params": {
-              "page": "users",
-              "useCase": "SearchUsers"
-            }
-          },
-          "title": "Users",
-          "icon": "fa fa-code"
-        }
-      ]
+      "params": {
+        "page": "products",
+        "useCase": "SearchProduct"
+      },
+      "title": "Products"
+    },
+    {
+      "params": {
+        "page": "users",
+        "useCase": "SearchUsers"
+      },
+      "title": "Users"
+    },
+    {
+      "params": {
+        "page": "superadmins",
+        "useCase": "SearchSuperAdmins"
+      },
+      "title": "Super Admins"
+    },
+    {
+      "params": {
+        "page": "audit",
+        "useCase": "SearchAudits"
+      },
+      "title": "Audit"
     }
   ],
   "mainNavigation": [
