@@ -5,75 +5,104 @@
         "search": "SearchSuperAdmins",
         "update": "UpdateSuperAdmin",
         "delete": "DeleteSuperAdmin"
-      },
+    },
     "insertFields": [
         {
-            "key":"name",
-            "label":"$firstLastName",
-            "rules":"required",
-            "cols":{ "sm": 12, "lg" : 6}
+            "key": "name",
+            "label": "$firstLastName",
+            "rules": "required",
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
         },
         {
-            "key":"username",
-            "label":"$username",
-            "rules":"required",
-            "cols":{ "sm": 12, "lg" : 6}
+            "key": "username",
+            "label": "$username",
+            "rules": "required",
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
         },
         {
-            "key":"email",
-            "label":"$email",
-            "rules":"required|email",
-            "cols":{ "sm": 12}
+            "key": "email",
+            "label": "$email",
+            "rules": "required|email",
+            "cols": {
+                "sm": 12
+            }
         },
         {
-            "key":"password",
-            "label":"$password",
-            "rules":"required",
-            "props":{
+            "key": "password",
+            "label": "$password",
+            "rules": "required",
+            "props": {
                 "type": "password"
             },
             "component": "v-password-field",
-            "type": "password",   
-            "cols":{ "sm": 12}
+            "type": "password",
+            "cols": {
+                "sm": 12
+            }
         }
-      ],
-      "updateFields": [
+    ],
+    "updateFields": [
         {
-            "key":"name",
-            "label":"$name",
-            "rules":"required",
-            "cols":{ "sm": 12, "lg" : 6}
+            "key": "name",
+            "label": "$name",
+            "rules": "required",
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
         },
         {
-            "key":"username",
-            "label":"$username",
-            "rules":"required",
-            "cols":{ "sm": 12, "lg" : 6}
+            "key": "username",
+            "label": "$username",
+            "rules": "required",
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
         },
         {
-            "key":"email",
-            "label":"$email",
-            "rules":"required|email",
-            "cols":{ "sm": 12}
+            "key": "email",
+            "label": "$email",
+            "rules": "required|email",
+            "cols": {
+                "sm": 12
+            }
         },
         {
-            "key":"password",
-            "label":"$password",
-            "props":{
+            "key": "password",
+            "label": "$password",
+            "props": {
                 "type": "password"
             },
             "component": "v-password-field",
-            "type": "password",   
-            "cols":{ "sm": 12}
+            "type": "password",
+            "cols": {
+                "sm": 12
+            }
         }
-      ],
-      "processDataOn": "client",
-      "headers": [
-        { "text": "$name", "value": "name" },
-        { "text": "$username", "value": "username" },
-        { "text": "$lastLoginTime", "value": "lastLoginTime" }
-      ],
-      "sorts": {
+    ],
+    "processDataOn": "client",
+    "headers": [
+        {
+            "text": "$name",
+            "value": "name"
+        },
+        {
+            "text": "$username",
+            "value": "username"
+        },
+        {
+            "text": "$lastLoginTime",
+            "value": "lastLoginTime"
+        }
+    ],
+    "sorts": {
         "lastLoginTime": "date"
-      }
+    }
 }

@@ -1,0 +1,91 @@
+{
+  "resource": "/audit",
+  "useCases": {
+    "insert": "None",
+    "search": "SearchAudits",
+    "update": "None",
+    "delete": "None"
+  },
+  "filterPosition": "right",
+  "headers": [
+    {
+      "text": "$actorIdentity",
+      "value": "actorIdentity"
+    },
+    {
+      "text": "$useCaseName",
+      "value": "useCaseName"
+    },
+    {
+      "text": "$status",
+      "value": "status"
+    },
+    {
+      "text": "$executedTime",
+      "value": "executedTime"
+    },
+    {
+      "text": "$useCaseData",
+      "value": "useCaseData"
+    }
+  ],
+  "excludedHeaders": [
+    "actorId",
+    "id",
+    "action"
+  ],
+  "filters": [
+    {
+      "key": "useCaseName",
+      "label": "$useCaseName",
+      "component": "v-autocomplete",
+      "dataSource": {
+        "endpoint": "/useCaseDocs/getUseCaseNames"
+      }
+    },
+    {
+      "key": "actorId",
+      "label": "$user",
+      "component": "v-autocomplete",
+      "dataSource": {
+        "endpoint": "/users",
+        "valueProperty": "id",
+        "textProperty": "username"
+      }
+    },
+    {
+      "key": "status",
+      "label": "$status",
+      "component": "v-autocomplete",
+      "dataSource": [
+        {
+          "text": "Pending",
+          "value": 0
+        },
+        {
+          "text": "Successfull",
+          "value": 1
+        },
+        {
+          "text": "FailedDueToValidation",
+          "value": 2
+        },
+        {
+          "text": "Failed",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "key": "StartDate",
+      "label": "$startDate",
+      "component": "v-date-field"
+    },
+    {
+      "key": "EndDate",
+      "label": "$endDate",
+      "component": "v-date-field"
+    }
+  ],
+  "columnWidth": "fit"
+}

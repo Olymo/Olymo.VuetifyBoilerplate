@@ -1,0 +1,61 @@
+{
+    "resource": "/categories",
+    "useCases": {
+        "insert": "AddCategory",
+        "search": "SearchCategory",
+        "update": "UpdateCategory",
+        "delete": "DeleteCategory"
+    },
+    "insertFields": [
+        {
+            "key": "name",
+            "label": "$name",
+            "rules": "required",
+            "cols": {
+                "sm": 12
+            }
+        },
+        {
+            "key": "parentId",
+            "label": "$parent",
+            "component": "v-autocomplete",
+            "dataSource": {
+                "endpoint": "/categories"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "attributeIds",
+            "label": "$attributes",
+            "component": "VSelectAll",
+            "dataSource": {
+                "endpoint": "/attributes"
+            },
+            "props": {
+                "multiple": true
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        }
+    ],
+    "processDataOn": "client",
+    "headers": [
+        {
+            "text": "$name",
+            "value": "name"
+        },
+        {
+            "text": "$attributes",
+            "value": "attributeNames"
+        },
+        {
+            "text": "$parent",
+            "value": "parentName"
+        }
+    ]
+}

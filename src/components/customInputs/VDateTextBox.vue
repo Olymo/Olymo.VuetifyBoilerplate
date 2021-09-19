@@ -11,7 +11,7 @@
     <template v-slot:activator="{ on }">
       <v-text-field
         color="primary"
-        prepend-inner-icon="event"
+        prepend-inner-icon="mdi-calendar"
         v-model="content"
         :label="label"
         readonly
