@@ -59,7 +59,7 @@
         {
             "key": "price",
             "label": "$price",
-            "rules": "numeric",
+            "rules": "numeric|required",
             "type": "number",
             "cols": {
                 "sm": 6,

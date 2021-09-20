@@ -25,7 +25,19 @@
             "cols": {
                 "sm": 12,
                 "lg": 6
-            }
+            },
+            "affects": [
+                {
+                    "key": "attributeIds",
+                    "change": {
+                        "type": "dataSource",
+                        "api": {
+                            "endpoint": "categories/GetCategoryAttributesNotAlreadyPresentInAncestors?id=",
+                            "associateValue": true
+                        }
+                    }
+                }
+            ]
         },
         {
             "key": "attributeIds",
@@ -52,6 +64,10 @@
         {
             "text": "$attributes",
             "value": "attributeNames"
+        },
+        {
+            "text": "$ancestorsAttributes",
+            "value": "ancestorsAttributeNames"
         },
         {
             "text": "$parent",

@@ -8,7 +8,8 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
         return originalPush.call(this, location, onResolve, onReject)
     }
     return originalPush.call(this, location).catch((err) => {
-        if (VueRouter.isNavigationFailure(err) && err.message.includes('Avoided redundant navigation to current location')) {
+        // if (VueRouter.isNavigationFailure(err) && (err.message.includes('Avoided redundant navigation to current location') || err.message.includes('Error: Redirected when going from'))) {
+        if (VueRouter.isNavigationFailure(err)) {
             return err
         }
         // rethrow error

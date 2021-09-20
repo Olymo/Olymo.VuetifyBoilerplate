@@ -37,6 +37,13 @@
     },
     {
       "params": {
+        "page": "productattributes",
+        "useCase": "SearchProductAttributes"
+      },
+      "title": "Product Attributes"
+    },
+    {
+      "params": {
         "page": "users",
         "useCase": "SearchUsers"
       },

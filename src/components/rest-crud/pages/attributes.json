@@ -36,14 +36,6 @@
                 {
                     "text": "Bool",
                     "value": "Bool"
-                },
-                {
-                    "text": "DateTime",
-                    "value": "DateTime"
-                },
-                {
-                    "text": "Enum",
-                    "value": "Enum"
                 }
             ],
             "cols": {
