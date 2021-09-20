@@ -167,6 +167,7 @@
         </v-card-text>
       </v-card>
     </v-footer>
+    <v-textarea v-show="false"></v-textarea>
   </v-app>
 </template>
 <script>

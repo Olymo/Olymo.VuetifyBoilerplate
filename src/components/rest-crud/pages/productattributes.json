@@ -1,0 +1,120 @@
+{
+    "resource": "/productattributes",
+    "useCases": {
+        "insert": "AddProductAttribute",
+        "search": "SearchProductAttributes",
+        "update": "UpdateProductAttribute",
+        "delete": "DeleteProductAttribute"
+    },
+    "insertFields": [
+        {
+            "key": "productId",
+            "label": "$product",
+            "rules": "required",
+            "component": "v-autocomplete",
+            "dataSource": {
+                "endpoint": "/products"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            },
+            "affects": [
+                {
+                    "key": "attributeId",
+                    "change": {
+                        "type": "dataSource",
+                        "api": {
+                            "endpoint": "categories/GetAvailableProductAttributesDeterminedByCategory?isUpdate=false&id=",
+                            "associateValue": true
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "key": "attributeId",
+            "label": "$attribute",
+            "rules": "required",
+            "component": "v-autocomplete",
+            "dataSource": {
+                "endpoint": "/attributes"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "value",
+            "label": "$value",
+            "rules": "required",
+            "cols": {
+                "sm": 12
+            }
+        }
+    ],
+    "updateFields": [
+        {
+            "key": "productId",
+            "label": "$product",
+            "rules": "required",
+            "component": "v-autocomplete",
+            "dataSource": {
+                "endpoint": "/products"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            },
+            "affects": [
+                {
+                    "key": "attributeId",
+                    "change": {
+                        "type": "dataSource",
+                        "api": {
+                            "endpoint": "categories/GetAvailableProductAttributesDeterminedByCategory?isUpdate=true&id=",
+                            "associateValue": true
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "key": "attributeId",
+            "label": "$attribute",
+            "rules": "required",
+            "component": "v-autocomplete",
+            "dataSource": {
+                "endpoint": "/attributes"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "value",
+            "label": "$value",
+            "rules": "required",
+            "cols": {
+                "sm": 12
+            }
+        }
+    ],
+    "processDataOn": "client",
+    "headers": [
+        {
+            "text": "$productName",
+            "value": "productName"
+        },
+        {
+            "text": "$attributeName",
+            "value": "attributeName"
+        },
+        {
+            "text": "$value",
+            "value": "value"
+        }
+    ]
+}
