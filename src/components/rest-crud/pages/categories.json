@@ -55,6 +55,71 @@
             }
         }
     ],
+    "updateFields": [
+        {
+            "key": "name",
+            "label": "$name",
+            "rules": "required",
+            "cols": {
+                "sm": 12
+            }
+        },
+        {
+            "key": "id",
+            "hidden": true,
+            "affects": [
+                {
+                    "key": "parentId",
+                    "change": {
+                        "type": "dataSource",
+                        "api": {
+                            "endpoint": "/categories/GetAllowedIdsForCategoryParent?id=",
+                            "associateValue": true
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "key": "parentId",
+            "label": "$parent",
+            "component": "v-autocomplete",
+            "dataSource": {
+                "endpoint": "/categories"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            },
+            "affects": [
+                {
+                    "key": "attributeIds",
+                    "change": {
+                        "type": "dataSource",
+                        "api": {
+                            "endpoint": "categories/GetCategoryAttributesNotAlreadyPresentInAncestors?id=",
+                            "associateValue": true
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "key": "attributeIds",
+            "label": "$attributes",
+            "component": "VSelectAll",
+            "dataSource": {
+                "endpoint": "/attributes"
+            },
+            "props": {
+                "multiple": true
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        }
+    ],
     "processDataOn": "client",
     "headers": [
         {
