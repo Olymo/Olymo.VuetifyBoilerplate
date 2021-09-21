@@ -16,6 +16,15 @@
             }
         },
         {
+            "key": "description",
+            "label": "$description",
+            "cols": {
+                "sm": 12
+            },
+            "component": "v-textarea",
+            "rules": "required"
+        },
+        {
             "key": "brandId",
             "label": "$brand",
             "component": "v-autocomplete",
@@ -75,6 +84,15 @@
             "cols": {
                 "sm": 12
             }
+        },
+        {
+            "key": "description",
+            "label": "$description",
+            "cols": {
+                "sm": 12
+            },
+            "component": "v-textarea",
+            "rules": "required"
         },
         {
             "key": "brandId",
@@ -145,6 +163,10 @@
         {
             "text": "$category",
             "value": "category"
+        },
+        {
+            "text": "$description",
+            "value": "description"
         }
     ]
 }
