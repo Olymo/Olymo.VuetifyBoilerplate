@@ -62,6 +62,20 @@
         "useCase": "SearchAudits"
       },
       "title": "Audit"
+    },
+    {
+      "params": {
+        "page": "suppliers",
+        "useCase": "SearchSuppliers"
+      },
+      "title": "Suppliers"
+    },
+    {
+      "params": {
+        "page": "storage",
+        "useCase": "SearchStorages"
+      },
+      "title": "Storage"
     }
   ],
   "mainNavigation": [

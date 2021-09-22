@@ -1,0 +1,26 @@
+{
+    "resource": "/suppliers",
+    "useCases": {
+      "insert": "AddSupplier",
+      "search": "SearchSuppliers",
+      "update": "UpdateSupplier",
+      "delete": "DeleteSupplier"
+    },
+    "insertFields": [
+      {
+        "key": "name",
+        "label": "$name",
+        "rules": "required",
+        "cols": {
+          "sm": 12
+        }
+      }
+    ],
+    "processDataOn": "client",
+    "headers": [
+      {
+        "text": "$name",
+        "value": "name"
+      }
+    ]
+  }
