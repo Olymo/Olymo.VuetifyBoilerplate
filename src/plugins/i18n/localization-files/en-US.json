@@ -9,7 +9,8 @@
         "perPage": "Items per page",
         "create": "Create new item",
         "allRecords": "All",
-        "delete": "Remove an item"
+        "delete": "Remove an item",
+        "edit" : "Edit"
     },
     "confirmDelete": "Are you confirming the delete process?",
     "yes" : "Yes",
@@ -34,5 +35,9 @@
     "order": {
         "Success": "Your order has been successfully received!",
         "Failed": "We encountered some issues. Try again in a few moments."
-    }
+    },
+    "inStock" : "In Stock",
+    "supplier" : "Supplier",
+    "name" : "Name",
+    "action" : "Action"
 }

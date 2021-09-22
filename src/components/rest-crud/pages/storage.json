@@ -1,0 +1,100 @@
+{
+    "resource": "/storages",
+    "useCases": {
+      "insert": "AddStorage",
+      "search": "SearchStorages",
+      "update": "UpdateStorage",
+      "delete": "DeleteStorage"
+    },
+    "insertFields": [
+        {
+            "key": "supplierId",
+            "label": "$supplier",
+            "component": "v-autocomplete",
+            "rules": "required",
+            "dataSource": {
+                "endpoint": "/suppliers"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "productId",
+            "label": "$product",
+            "rules": "required",
+            "component": "v-autocomplete",
+            "dataSource": {
+                "endpoint": "/products"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "inStock",
+            "label": "$inStock",
+            "rules": "numeric|required",
+            "type": "number",
+            "cols": {
+                "sm": 6,
+                "lg": 4
+            }
+        }
+    ],
+    "updateFields": [
+        {
+            "key": "supplierId",
+            "label": "$supplier",
+            "component": "v-autocomplete",
+            "rules": "required",
+            "dataSource": {
+                "endpoint": "/suppliers"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "productId",
+            "label": "$product",
+            "rules": "required",
+            "component": "v-autocomplete",
+            "dataSource": {
+                "endpoint": "/products"
+            },
+            "cols": {
+                "sm": 12,
+                "lg": 6
+            }
+        },
+        {
+            "key": "inStock",
+            "label": "$inStock",
+            "rules": "numeric|required",
+            "type": "number",
+            "cols": {
+                "sm": 6,
+                "lg": 4
+            }
+        }
+    ],
+    "processDataOn": "client",
+    "headers": [
+      {
+        "text": "$product",
+        "value": "productName"
+      },
+      {
+        "text": "$supplier",
+        "value": "supplierName"
+      },
+      {
+        "text": "$inStock",
+        "value": "inStock"
+      }
+    ]
+  }

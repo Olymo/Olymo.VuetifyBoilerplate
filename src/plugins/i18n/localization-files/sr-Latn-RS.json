@@ -46,6 +46,9 @@
     "Send us an email": "Posaljite nam mejl",
     "Email sent successfully.": "Email je uspešno poslat.",
     "An error has occurred": "Došlo je do greške, molimo pokušajte ponovo."
-  }
-
+  },
+  "inStock" : "Na stanju",
+  "supplier" : "Dobavljač",
+  "name" : "Naziv",
+  "action" : "Radnje"
 }
