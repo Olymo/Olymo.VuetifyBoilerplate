@@ -7,7 +7,7 @@
       label="Select"
       item-text="title"
       item-value="code"
-      :menu-props="{ botom: true, offsetY: true }"
+      :menu-props="{ bottom: true, offsetY: true }"
       hide-details="auto"
       single-line
       dense
