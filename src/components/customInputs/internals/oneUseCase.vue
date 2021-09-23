@@ -79,7 +79,7 @@ export default {
         if (useCase.selected) {
           this.useCaseGroup.useCases[1].selected = true
         }
-        if (useCase.id == this.useCaseGroup.useCases[1].id) {
+        if (useCase.id == this.useCaseGroup.useCases[2].id) {
           if (!useCase.selected) {
             this.useCaseGroup.useCases.forEach(function(el) {
               el.selected = false
