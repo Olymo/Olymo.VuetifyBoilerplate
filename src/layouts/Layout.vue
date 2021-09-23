@@ -211,7 +211,7 @@ export default {
     });
     EventBus.$on("logout", () => {
       this.isUserLoggedIn = isAuthorized();
-      this.isAdmin = false;
+      this.isAdmin = isAdmin();
       this.allowedUseCaseIds = [];
     });
   },

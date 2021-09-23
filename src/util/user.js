@@ -46,6 +46,10 @@ export const getActorData = () => {
 }
 
 export const isAdmin = () => {
+    if(!isAuthorized()) {
+        return false;
+    }
+
     var actorData = getActorData();
 
     if (actorData == null) {
