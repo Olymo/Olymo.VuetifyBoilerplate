@@ -77,7 +77,7 @@ export default {
     clickOnSearchUseCase: function(useCase) {
       if (this.useCaseGroup.useCases.length == 4) {
         if (useCase.selected) {
-          this.useCaseGroup.useCases[1].selected = true
+          this.useCaseGroup.useCases[2].selected = true
         }
         if (useCase.id == this.useCaseGroup.useCases[2].id) {
           if (!useCase.selected) {
