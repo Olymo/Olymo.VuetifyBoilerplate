@@ -81,8 +81,8 @@ const routes = [
             import(/* webpackChunkName: "products-page" */ '../components/Products')
     },
     {
-        path: '/product',
-        name: 'product',
+        path: '/products/:id',
+        name: 'product',        
         meta: {
             title: 'Product'
         },
@@ -168,16 +168,16 @@ const router = new VueRouter({
 
 router.beforeEach((to, _from, next) => {
     const publicPages = [
-        '/',
-        '/login',
-        '/register',
-        '/404',
-        '/products',
-        '/product',
-        '/contact'
+        'home',
+        'login',
+        'register',
+        '404',
+        'products',
+        'product',
+        'contact'
     ]
-    const loggedIn = isAuthorized()
-    const authRequired = !publicPages.includes(to.path)
+    const loggedIn = isAuthorized()    
+    const authRequired = !publicPages.includes(to.name)
     if (authRequired && !loggedIn) return next('/login')
     next()
 })
