@@ -2,7 +2,7 @@ import axios from "axios";
 import i18n from "../plugins/i18n/i18n";
 
 const httpClient = axios.create({
-  baseURL: "http://localhost:5010/api/",
+  baseURL: process.env.VUE_APP_BACKEND_DOMAIN + "/api/",
   headers: {
     "Content-Type": "application/json",
   },
