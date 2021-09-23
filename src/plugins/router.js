@@ -81,6 +81,15 @@ const routes = [
             import(/* webpackChunkName: "products-page" */ '../components/Products')
     },
     {
+        path: '/product',
+        name: 'product',
+        meta: {
+            title: 'Product'
+        },
+        component: () =>
+            import(/* webpackChunkName: "product-page" */ '../components/Product')
+    },
+    {
         path: '/cart',
         name: 'cart',
         meta: {
@@ -164,6 +173,7 @@ router.beforeEach((to, _from, next) => {
         '/register',
         '/404',
         '/products',
+        '/product',
         '/contact'
     ]
     const loggedIn = isAuthorized()

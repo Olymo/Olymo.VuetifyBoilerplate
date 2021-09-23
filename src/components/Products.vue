@@ -24,23 +24,15 @@
             </v-col>
           </v-row>
 
-          <div class="text-center my-2">
-            <v-pagination
-              v-model="pagination.currentPage"
-              :length="pagination.totalPages"
-              @input="handlePageChange"
-            ></v-pagination>
-          </div>
-
           <v-divider></v-divider>
 
-          <div class="row text-center">
+          <div class="row text-center" style="min-height: 55em">
             <div
               class="col-md-3 col-sm-6 col-xs-12"
               :key="product.id"
               v-for="product in products"
             >
-              <product
+              <product-card
                 :id="product.id"
                 :category="product.category"
                 :name="product.name"
@@ -48,8 +40,16 @@
                 :totalAvailable="product.totalAvailable"
                 :brand="product.brand"
                 :image="product.productImages[0].imageSource"
-              ></product>
+              ></product-card>
             </div>
+          </div>
+          <v-divider></v-divider>
+          <div class="text-center my-2">
+            <v-pagination
+              v-model="pagination.currentPage"
+              :length="pagination.totalPages"
+              @input="handlePageChange"
+            ></v-pagination>
           </div>
         </div>
       </div>
@@ -58,12 +58,12 @@
 </template>
 
 <script>
-import Product from "../components/products/ProductCard.vue";
+import ProductCard from "../components/products/ProductCard.vue";
 import Filters from "../components/products/Filters.vue";
 
 export default {
   components: {
-    Product,
+    ProductCard,
     Filters,
   },
   data: () => ({
