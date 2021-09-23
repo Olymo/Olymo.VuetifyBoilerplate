@@ -77,11 +77,14 @@
                     </v-card-text>
 
                     <div class="text-center">
-                      <v-btn class="ma-2" outlined color="info">
-                        <router-link tag="span" to="products">
+                      <router-link
+                        :to="{ name: 'product', params: { id: item.id } }"
+                        style="text-decoration: none"
+                      >
+                        <v-btn class="ma-2" outlined color="info">
                           Explore
-                        </router-link>
-                      </v-btn>
+                        </v-btn>
+                      </router-link>
                     </div>
                   </v-card>
                 </v-hover>
