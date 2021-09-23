@@ -35,7 +35,6 @@
                               v-model="user.password"
                               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                               :type="showPassword ? 'text' : 'password'"
-                              :counter="5"
                               hint="At least 5 characters"
                               :error-messages="errors"
                               label="Password"
@@ -107,7 +106,7 @@ export default {
     },
     showPassword: false,
     showWrongCredsError: false,
-    wrongCredsError: translate('Failed', 'login'),
+    wrongCredsError: translate('Wrong combination of username and password', 'login'),
     welcomeBack: translate('Welcome Back', 'welcome'),
     submitText: translate('Submit', 'forms'),
     clearText: translate('Clear', 'forms'),
@@ -144,6 +143,7 @@ export default {
 .loginOverlay {
   background:rgba(33,150,243,0.3);
 }
+
 .loginContainer {
   min-height: 55vh;
 }

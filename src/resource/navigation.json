@@ -95,23 +95,7 @@
       "icon": "",
       "translatePath": "nav",
       "routeName": "products",
-      "subItems": [
-        {
-          "name": "T-Shirts"
-        },
-        {
-          "name": "Jackets"
-        },
-        {
-          "name": "Shirts"
-        },
-        {
-          "name": "Jeans"
-        },
-        {
-          "name": "Shoes"
-        }
-      ],
+      "subItems": [],
       "data": [],
       "shouldBeLoggedIn": "false"
     },

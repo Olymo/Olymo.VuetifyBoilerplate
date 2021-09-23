@@ -2,18 +2,18 @@
   <div>
     <v-container class="padding-bottom">
 
-      <h1 class="text-center pa-4">Shopping cart</h1>
+      <h1 class="text-center pa-4">{{ text.shoppingCart }}</h1>
       <v-row v-if="this.cartItems.length > 0">
         <v-col :cols="12" md="9" sm="12" >
           <v-simple-table>
             <template v-slot:default>
               <thead>
               <tr>
-                <th class="text-center">ITEM</th>
-                <th class="text-center">PRICE</th>
-                <th class="text-center">QUANTITY</th>
-                <th class="text-center">TOTAL</th>
-                <th class="text-center"></th>
+                <th>ITEM</th>
+                <th>PRICE</th>
+                <th>QUANTITY</th>
+                <th>TOTAL</th>
+                <th>ACTION</th>
               </tr>
               </thead>
               <tbody>
@@ -32,7 +32,7 @@
                 </v-list-item></td>
                 <td>${{ cartItem.price }}</td>
                 <td>
-                  <div small class="pt-3">Available: {{ cartItem.totalAvailable }}</div>
+                  <div small class="pt-3">{{ text.availableText}}: {{ cartItem.totalAvailable }}</div>
                   <v-text-field
                     class="pt-3"
                     label="Outlined"
@@ -54,35 +54,35 @@
           </v-simple-table>
         </v-col>
         <v-col :cols="12" md="3" sm="12" style="background-color: lightgray">
-          <p class="headline">Order Summary</p>
-          <p class="overline">Shipping and additional costs are calculated based on values you have entered.
+          <p class="headline">{{ text.summary }}</p>
+          <p class="overline">{{ text.summaryText }}
           </p>
           <v-simple-table>
             <template v-slot:default>
               <tbody>
               <tr>
-                <td>Order Subtotal</td>
+                <td>{{ text.orderSubtotal }}</td>
                 <td class="text-right" style="width: 50px;">${{ orderSubTotal }}</td>
               </tr>
               <tr>
-                <td>Shipping Charges</td>
-                <td class="text-right" style="width: 50px;">$10.00</td>
+                <td>{{ text.shipping }}</td>
+                <td class="text-right" style="width: 50px;">$ {{ shippingValue }}</td>
               </tr>
               <tr>
-                <td>Total</td>
-                <td class="text-right" style="width: 50px;"><b>${{ orderSubTotal + 10}}</b></td>
+                <td>{{ text.total }}</td>
+                <td class="text-right" style="width: 50px;"><b>${{ orderSubTotal + shippingValue}}</b></td>
               </tr>
               </tbody>
             </template>
           </v-simple-table>
           <div class="text-center">
-            <v-btn class="primary white--text mt-5" outlined @click="() => $router.push('checkout')">PROCEED TO PAY</v-btn>
+            <v-btn class="primary white--text mt-5" outlined @click="() => $router.push('checkout')"> {{text.proceedToPay}} </v-btn>
           </div>
         </v-col>
       </v-row>
 
       <v-row v-else>
-          <p class="display-1 font-weight-light	text-center pa-4">You cart is empty, go to products page.</p>
+          <p class="display-1 font-weight-light	text-center pa-4"> {{ text.emptyCart }}</p>
       </v-row>
     </v-container>
   </div>
@@ -90,6 +90,7 @@
 <script>
 import { required, regex } from 'vee-validate/dist/rules'
 import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+import translate from '../util/genTable/multilanguageHelper.js'
 
 setInteractionMode('eager')
 
@@ -110,7 +111,19 @@ export default {
   },
   data: () => ({
     cartItems: [],
+    shippingValue: 20,
     orderSubTotal: 0,
+    text: {
+      shoppingCart: translate("Shopping cart", "cart"),
+      emptyCart: translate("Your cart is empty", "cart"),
+      availableText: translate("Available", "cart"),
+      proceedToPay: translate("Proceed to pay", "cart"),
+      shipping: translate("Shipping Charges", "cart"),
+      orderSubtotal: translate("Order subtotal", "cart"),
+      total: translate("Total", "cart"),
+      summary: translate("Order Summary", "cart"),
+      summaryText: translate("Shipping and additional costs are calculated based on values you have entered", "cart"),
+    },
   }),
   methods: {
       updateQuantity(quantity, cartItem) {
@@ -154,6 +167,11 @@ export default {
         this.cartItems.forEach(el => {
           this.orderSubTotal += el.quantity * el.price;
         });
+        if(this.orderSubTotal < 300) {
+          this.shippingValue = 20;
+        } else {
+          this.shippingValue = 0;
+        }
       }
   },
   beforeCreate: function() {

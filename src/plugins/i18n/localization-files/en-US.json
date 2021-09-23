@@ -28,9 +28,6 @@
     "forms": {
         "Submit": "Submit",
         "Clear": "Clear"
-      },
-    "login": {
-        "Failed": "Wrong combination of username and password."
     },
     "order": {
         "Success": "Your order has been successfully received!",

@@ -31,11 +31,20 @@
     "Clear": "Očisti"
   },
   "login": {
-    "Failed": "Korisničko ime i lozinka se ne poklapaju."
+    "Wrong combination of username and password": "Korisničko ime i lozinka se ne poklapaju."
   },
   "order": {
     "Success": "Vaša porudžbina je primljena!",
-    "Failed": "Došlo je do greške. Molimo pokušajte ponovo."
+    "Failed": "Došlo je do greške. Molimo pokušajte ponovo.",
+    "Change order status": "Promenite status porudžbine",
+    "User name": "Ime korisnika",
+    "Address": "Adresa",
+    "Order date": "Datum porudžbine",
+    "Order status": "Status porudžbine",
+    "Received": "Primljeno",
+    "Shipped": "Poslato",
+    "Delivered": "Dostavljeno",
+    "Cancelled": "Otkazano"
   },
   "profile": {
     "Update": "Ažurirajte",
@@ -43,12 +52,39 @@
   },
   "contact": {
     "Send": "Pošalji",
-    "Send us an email": "Posaljite nam mejl",
+    "Send us an email": "Pošaljite nam mejl",
     "Email sent successfully.": "Email je uspešno poslat.",
     "An error has occurred": "Došlo je do greške, molimo pokušajte ponovo."
   },
   "inStock" : "Na stanju",
   "supplier" : "Dobavljač",
   "name" : "Naziv",
-  "action" : "Radnje"
+  "action" : "Radnje",
+  "cart": {
+    "Shopping cart": "Korpa",
+    "Your cart is empty": "Vaša korpa je prazna",
+    "Available": "Dostupno",
+    "Proceed to pay": "Nastaviti sa plaćanjem",
+    "Shipping Charges": "Troškovi dostave",
+    "Order subtotal": "Medjuzbir",
+    "Total": "Total",
+    "Order Summary": "Pregled porudžbine",
+    "Shipping and additional costs are calculated based on values you have entered": "Dostava i ostali troškovi se računaju na osnovu vrednosti koje ste izabrali"
+  },
+  "slider": {
+    "Sale up to 40% + Extra 10%": "Popusti do 40% + Dodatnih 10%",
+    "New autumn collection": "Nova jesenja kolekcija",
+    "Earn a bonus with online shopping": "Ostvariti ponus uz online kupovinu"
+  },
+  "home": {
+    "Watches": "Satovi",
+    "Jewellery": "Nakit",
+    "Bags": "Torbe",
+    "Free shipping & return over $300": "Besplatna dostava i povraćaj na porudžbine preko $300",
+    "Money back guarantee": "Garantovano vraćamo novac do 30 dana",
+    "24/7 Custom support +3816771723456": "24/7 Korisnička podrška +3816771723456",
+    "We strive to be as accurate as possible in the product description, image display and prices themselves, but we cannot guarantee that all information is complete and error-free": "Nastojimo da budemo što precizniji u opisu proizvoda, prikazu slika i samih cena, ali ne možemo garantovati da su sve informacije kompletne i bez grešaka.",
+    "All items displayed on the site are part of our offer and do not imply that they are available at all times": "Svi artikli prikazani na sajtu su deo naše ponude i ne podrazumeva da su dostupni u svakom trenutku."
+  }
+
 }

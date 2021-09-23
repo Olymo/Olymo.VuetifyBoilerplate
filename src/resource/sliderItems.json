@@ -1,0 +1,14 @@
+[
+    {
+        "imgPath": "../assets/img/home/slider0.jpg",
+        "title": "Sale up to 40% + Extra 10%"
+    },
+    {
+        "imgPath": "../assets/img/home/slider1.jpg",
+        "title": "New collection"
+    },
+    {
+        "imgPath": "../assets/img/home/slider2.jpg",
+        "title": "Earn a bonus with online shopping"
+    }
+]
