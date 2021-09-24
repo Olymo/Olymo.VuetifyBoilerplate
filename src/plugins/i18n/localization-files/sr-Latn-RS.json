@@ -85,6 +85,25 @@
     "24/7 Custom support +3816771723456": "24/7 Korisnička podrška +3816771723456",
     "We strive to be as accurate as possible in the product description, image display and prices themselves, but we cannot guarantee that all information is complete and error-free": "Nastojimo da budemo što precizniji u opisu proizvoda, prikazu slika i samih cena, ali ne možemo garantovati da su sve informacije kompletne i bez grešaka.",
     "All items displayed on the site are part of our offer and do not imply that they are available at all times": "Svi artikli prikazani na sajtu su deo naše ponude i ne podrazumeva da su dostupni u svakom trenutku."
-  }
-
+  },
+  "description" : "Opis",
+  "productName" : "Naziv Proizvoda",
+  "attributeName" : "Naziv Specifikacije",
+  "value" : "Vrednost",
+  "type" : "Tip",
+  "search" : "Pretraga",
+  "attributes" : "Atributi",
+  "ancestorsAttributes" : "Nasledjeni Atributi",
+  "parent" : "Roditelj",
+  "attribute" : "Specifikacija",
+  "product" : "Proizvod",
+  "username" : "Korisničko Ime",
+  "lastLoginTime" : "Poslednji put ulogovan",
+  "roles" : "Uloge",
+  "actorIdentity" : "Identitet",
+  "useCaseName" : "Naziv Slučaja Korišćenja",
+  "status" : "Status",
+  "executedTime" : "Vreme Izvršavanja",
+  "useCaseData" : "Podaci",
+  "allowedFilters" : "Filteri"
 }

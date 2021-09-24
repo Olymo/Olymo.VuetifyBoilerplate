@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-12">
     <v-container>
       <div class="row">
         <div class="col-md-5 col-sm-5 col-xs-12">
@@ -14,7 +14,6 @@
         </div>
 
         <div class="col-md-7 col-sm-7 col-xs-12">
-          <v-breadcrumbs class="pb-0" :items="breadcrums"></v-breadcrumbs>
           <div class="pl-6">
             <p class="display-1 mb-0">{{ product.name }}</p>
             <v-card-actions class="pa-0">
@@ -35,28 +34,46 @@
               <p class="subtitle-1 font-weight-thin">
                 {{ product.description }}
               </p>
-
-              <div v-for="item in product.productAttributes" :key="item.id">
-                <p class="title">{{ item.name }}</p>
-                <p>{{ item.value }}</p>
-              </div>
+              <h4 class="specs-header">Additional Details</h4>
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">
+                        Name
+                      </th>
+                      <th class="text-left">
+                        Value
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="item in product.productAttributes"
+                      :key="item.id"
+                    >
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.value }}</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
             </div>
-            <v-text-field
-              outlined
-              style="width: 100px"
-              :value="1"
-              dense
-            ></v-text-field>
-            <v-btn class="primary white--text" outlined tile dense
-              ><v-icon>mdi-cart</v-icon> ADD TO CART</v-btn
-            >
-            <v-btn class="ml-4" outlined tile>ADD TO WISHLIST</v-btn>
+            <div>
+              <v-btn class="primary white--text" outlined tile dense
+                ><v-icon>mdi-cart</v-icon> ADD TO CART</v-btn
+              >
+            </div>
           </div>
         </div>
       </div>
+          <!-- <div v-for="item in product.productAttributes" :key="item.id">
+            <p class="title">{{ item.name }}</p>
+            <span>{{ item.value }}</span>
+          </div> -->
       <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12">
-          <v-card-text class="pa-0 pt-4" tile outlined>
+          <v-card-text class="pa-0 pt-4 mt-15" tile outlined>
             <p class="subtitle-1 font-weight-light pt-3 text-center">
               YOU MIGHT ALSO LIKE
             </p>
@@ -104,6 +121,8 @@
   </div>
 </template>
 <script>
+import translate from '../util/genTable/multilanguageHelper.js'
+
 export default {
   data() {
     return {
@@ -190,3 +209,14 @@ export default {
   },
 };
 </script>
+
+<style>
+  .specs-header{
+    margin-left: 15px;
+    margin-top: 50px;
+  }
+
+  table{
+    margin: 0px 0px 30px;
+  }
+</style>
