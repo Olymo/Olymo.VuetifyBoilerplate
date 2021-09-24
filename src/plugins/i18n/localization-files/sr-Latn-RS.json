@@ -31,7 +31,8 @@
     "Clear": "Očisti"
   },
   "login": {
-    "Wrong combination of username and password": "Korisničko ime i lozinka se ne poklapaju."
+    "Wrong combination of username and password": "Korisničko ime i lozinka se ne poklapaju.",
+    "You need to activate your account first": "Morate prvo da aktivirate svoj nalog."
   },
   "order": {
     "Success": "Vaša porudžbina je primljena!",
@@ -48,7 +49,8 @@
   },
   "profile": {
     "Update": "Ažurirajte",
-    "Profile Settings": "Podešavanja profila"
+    "Profile Settings": "Podešavanja profila",
+    "You have successfully update your profile": "Uspešno ste ažurirali svoj profil"
   },
   "contact": {
     "Send": "Pošalji",
@@ -69,7 +71,9 @@
     "Order subtotal": "Medjuzbir",
     "Total": "Total",
     "Order Summary": "Pregled porudžbine",
-    "Shipping and additional costs are calculated based on values you have entered": "Dostava i ostali troškovi se računaju na osnovu vrednosti koje ste izabrali"
+    "Shipping and additional costs are calculated based on values you have entered": "Dostava i ostali troškovi se računaju na osnovu vrednosti koje ste izabrali",
+    "You have successfully added the product to your cart": "Uspešno ste dodali proizvod u korpu.",
+    "Product is already in cart": "Proizvod je već dodat u korpu."
   },
   "slider": {
     "Sale up to 40% + Extra 10%": "Popusti do 40% + Dodatnih 10%",

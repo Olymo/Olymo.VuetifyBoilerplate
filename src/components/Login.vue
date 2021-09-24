@@ -43,7 +43,7 @@
                           ></v-text-field>
                         </validation-provider>
 
-                        <div v-if="showWrongCredsError" class="red--text mb-6">{{ wrongCredsError }}</div>
+                        <div v-if="showServerError" class="red--text mb-6">{{ serverError }}</div>
 
                         <v-btn
                           class="mr-4"
@@ -105,8 +105,8 @@ export default {
       password: '',
     },
     showPassword: false,
-    showWrongCredsError: false,
-    wrongCredsError: translate('Wrong combination of username and password', 'login'),
+    showServerError: false,
+    serverError: translate('Wrong combination of username and password', 'login'),
     welcomeBack: translate('Welcome Back', 'welcome'),
     submitText: translate('Submit', 'forms'),
     clearText: translate('Clear', 'forms'),
@@ -125,7 +125,13 @@ export default {
         this.$router.push('/products');
       })
       .catch(err => {
-        this.showWrongCredsError = true;
+        console.log(err.response.data);
+        this.showServerError = true;
+        if(err.response.data.type == "NotConfirmedAccount") {
+          this.serverError = translate("You need to activate your account first", "login")
+        } else {
+          this.serverError = translate("Wrong combination of username and password", "login")
+        }
       });
 
     },
