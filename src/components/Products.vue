@@ -75,6 +75,8 @@ export default {
       search: {
         categoryId: null,
         brandIds: [],
+        minPrice: 0,
+        maxPrice: 10000,
       },
       products: [],
       pagination: {},
@@ -148,6 +150,8 @@ export default {
         if (params.categoryId != null) {
           urlParams.append("categoryId", params.categoryId);
         }
+        urlParams.append("minPrice", params.minPrice);
+        urlParams.append("maxPrice", params.maxPrice);
         for (let id of params.brandIds) {
           urlParams.append("brandIds", id);
         }

@@ -37,6 +37,7 @@
       :height="10"
       class="align-center"
       dense
+      @change="onPriceChange"
     ></v-range-slider>
     <v-row class="pa-2" dense>
       <v-col cols="12" sm="5">
@@ -45,7 +46,7 @@
           label="Min"
           outlined
           dense
-          @change="$set(range, 0, $event)"
+          @change="onPriceFieldChange($event, 0)"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="2">
@@ -57,7 +58,7 @@
           label="Max"
           outlined
           dense
-          @change="$set(range, 1, $event)"
+          @change="onPriceFieldChange($event, 1)"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -68,18 +69,29 @@
 <script>
 export default {
   name: "Filters",
-  data: () => ({
-    active: [1],
-    open: [1],
-    range: [0, 10000],
-    min: 0,
-    max: 10000,
-    categories: [],
-    brandsWithProducts: [],
-    brands: [],
-    selectedBrands: [],
-  }),
+  data() {
+    return {
+      active: [1],
+      open: [1],
+      range: [0, 10000],
+      min: 0,
+      max: 10000,
+      categories: [],
+      brandsWithProducts: [],
+      brands: [],
+      selectedBrands: [],
+    };
+  },
   methods: {
+    onPriceFieldChange: function (amount, i) {
+      this.$set(this.range, i, amount);
+      this.onPriceChange(this.range);
+    },
+    onPriceChange: function (prices) {
+      this.$parent.search.minPrice = prices[0];
+      this.$parent.search.maxPrice = prices[1];
+      this.applyFilters();
+    },
     onCategoryChange: function (selection) {
       this.selectedBrands = [];
       if (selection.length) {
