@@ -95,8 +95,8 @@ export default {
     cancelOrder(orderId) {
       this.$http.put("orders/cancel/" + orderId)
         .then(response => {
-          console.log(response)
-          this.orders.find(el => el.id == orderId).orderStatus = 4;
+          console.log(response);
+          this.orders.find(el => el.id == orderId).orderStatus = 3;
         })
         .catch(err => console.log(err));
     },
