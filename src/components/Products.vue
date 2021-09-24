@@ -3,11 +3,9 @@
     <v-container>
       <div class="row">
         <div class="col-md-3 col-sm-3 col-xs-12">
-          <filters></filters>
+          <filters @update="onFiltersUpdate"></filters>
         </div>
         <div class="col-md-9 col-sm-9 col-xs-12">
-          <v-breadcrumbs class="pb-0" :items="breadcrums"></v-breadcrumbs>
-
           <v-row dense>
             <v-col cols="12" sm="8" class="pl-6 pt-6">
               <small> {{ this.itemsCount }} </small>
@@ -15,11 +13,14 @@
             <v-col cols="12" sm="4">
               <v-select
                 class="pa-0"
-                v-model="select"
-                :items="options"
+                v-model="sortBy"
+                :items="sortOptions"
+                item-text="text"
+                item-value="value"
                 style="margin-bottom: -20px"
                 outlined
                 dense
+                @change="onSortByUpdate"
               ></v-select>
             </v-col>
           </v-row>
@@ -44,6 +45,7 @@
             </div>
           </div>
           <v-divider></v-divider>
+
           <div class="text-center my-2">
             <v-pagination
               v-model="pagination.currentPage"
@@ -55,7 +57,7 @@
       </div>
     </v-container>
   </div>
-</template>
+</template> 
 
 <script>
 import ProductCard from "../components/products/ProductCard.vue";
@@ -67,47 +69,59 @@ export default {
     Filters,
   },
   data: () => ({
-    breadcrums: [
-      {
-        text: "Home",
-        disabled: false,
-        href: "breadcrumbs_home",
-      },
-      {
-        text: "Clothing",
-        disabled: false,
-        href: "breadcrumbs_clothing",
-      },
-      {
-        text: "T-Shirts",
-        disabled: true,
-        href: "breadcrumbs_shirts",
-      },
-    ],
-    select: "Popularity",
-    options: [
-      "Default",
-      "Popularity",
-      "Relevance",
-      "Price: Low to High",
-      "Price: High to Low",
-    ],
-    search: null,
+    sortBy: "",
+    search: {
+      categoryId: null,
+      brandIds: [],
+    },
     products: [],
     pagination: {},
+    sortOptions: [
+      {
+        text: "Default",
+        value: "",
+      },
+      {
+        text: "Price: Low to High",
+        value: "Price.Asc",
+      },
+      {
+        text: "Price: High to Low",
+        value: "Price.Desc",
+      },
+      {
+        text: "Name: Ascending",
+        value: "Name.Asc",
+      },
+      {
+        text: "Name: Descending",
+        value: "Name.Desc",
+      },
+    ],
   }),
   created() {
     this.searchProducts(1);
   },
   methods: {
-    handlePageChange(value) {
-      this.searchProducts(value);
+    handlePageChange(page) {
+      this.searchProducts(page);
+    },
+    onFiltersUpdate() {
+      this.searchProducts(1);
+    },
+    onSortByUpdate() {
+      this.searchProducts(this.pagination.currentPage);
     },
     searchProducts(page) {
-      var keyword = keyword == "" ? null : keyword;
-
       this.$http
-        .get("products?paginate=true&perPage=8&page=" + page)
+        .get(
+          "products?paginate=true&perPage=8&page=" +
+            page +
+            (this.sortBy != "" ? "&SortBy=" + this.sortBy : ""),
+          {
+            params: this.prepareSeachObject(),
+          }
+        )
         .then((res) => {
           var data = res.data;
 
@@ -120,6 +134,20 @@ export default {
           };
         })
         .catch((err) => console.log(err));
+    },
+    prepareSeachObject() {
+      let params = this.search;
+      if (params.brandIds.length) {
+        let urlParams = new URLSearchParams();
+        if (params.categoryId != null) {
+          urlParams.append("categoryId", params.categoryId);
+        }
+        for (let id of params.brandIds) {
+          urlParams.append("brandIds", id);
+        }
+        return urlParams;
+      }
+      return params;
     },
   },
   computed: {
