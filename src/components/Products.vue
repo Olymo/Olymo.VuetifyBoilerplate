@@ -44,6 +44,7 @@
               ></product-card>
             </div>
           </div>
+
           <v-divider></v-divider>
 
           <div class="text-center my-2">
@@ -68,38 +69,43 @@ export default {
     ProductCard,
     Filters,
   },
-  data: () => ({
-    sortBy: "",
-    search: {
-      categoryId: null,
-      brandIds: [],
-    },
-    products: [],
-    pagination: {},
-    sortOptions: [
-      {
-        text: "Default",
-        value: "",
+  data() {
+    return {
+      sortBy: "",
+      search: {
+        categoryId: null,
+        brandIds: [],
       },
-      {
-        text: "Price: Low to High",
-        value: "Price.Asc",
-      },
-      {
-        text: "Price: High to Low",
-        value: "Price.Desc",
-      },
-      {
-        text: "Name: Ascending",
-        value: "Name.Asc",
-      },
-      {
-        text: "Name: Descending",
-        value: "Name.Desc",
-      },
-    ],
-  }),
+      products: [],
+      pagination: {},
+      sortOptions: [
+        {
+          text: "Default",
+          value: "",
+        },
+        {
+          text: "Price: Low to High",
+          value: "Price.Asc",
+        },
+        {
+          text: "Price: High to Low",
+          value: "Price.Desc",
+        },
+        {
+          text: "Name: Ascending",
+          value: "Name.Asc",
+        },
+        {
+          text: "Name: Descending",
+          value: "Name.Desc",
+        },
+      ],
+    };
+  },
   created() {
+    if (this.$route.params.categoryId != undefined) {
+      this.search.categoryId = this.$route.params.categoryId;
+    }
     this.searchProducts(1);
   },
   methods: {
@@ -161,6 +167,7 @@ export default {
         this.pagination.currentPage == this.pagination.totalPages
           ? this.pagination.totalCount
           : this.pagination.currentPage * this.pagination.itemsPerPage;
+      if (this.pagination.totalCount == 0) return "";
       return `Showing ${n1}-${n2} of total ${this.pagination.totalCount} products`;
     },
   },
@@ -176,7 +183,7 @@ export default {
   position: absolute;
   width: 100%;
 }
-.v-treeview-node__label:hover{
+.v-treeview-node__label:hover {
   cursor: pointer;
 }
 </style>

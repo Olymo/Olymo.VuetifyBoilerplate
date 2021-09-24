@@ -33,7 +33,7 @@
                 class="white--text caption"
                 text
                 @click="
-                  () => $router.push({ name: 'products', params: item.id })
+                  () => $router.push({ name: 'products', params: { categoryId: item.id} })
                 "
                 >SHOP NOW
                 <v-icon class="white--text caption"

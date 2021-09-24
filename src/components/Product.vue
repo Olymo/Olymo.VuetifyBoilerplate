@@ -39,12 +39,8 @@
                 <template v-slot:default>
                   <thead>
                     <tr>
-                      <th class="text-left">
-                        Name
-                      </th>
-                      <th class="text-left">
-                        Value
-                      </th>
+                      <th class="text-left">Name</th>
+                      <th class="text-left">Value</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -59,27 +55,33 @@
                 </template>
               </v-simple-table>
             </div>
-            <div>
-              <v-btn class="primary white--text" outlined tile dense
-                ><v-icon>mdi-cart</v-icon> ADD TO CART</v-btn
-              >
-            </div>
 
             <v-row>
               <v-col md="6">
-                <v-alert v-if="showServerResponse" dense :type="responseType" md="3">{{ serverResponse }}</v-alert>
+                <v-alert
+                  v-if="showServerResponse"
+                  dense
+                  :type="responseType"
+                  md="3"
+                  >{{ serverResponse }}</v-alert
+                >
               </v-col>
             </v-row>
-            <v-btn class="primary white--text" outlined tile dense @click="addToCart(product.id)"
+            <div>
+            <p>In Stock: {{product.totalAvailable}}</p>
+            <v-btn
+              class="primary white--text"
+              outlined
+              tile
+              dense
+              @click="addToCart(product.id)"
               ><v-icon>mdi-cart</v-icon> ADD TO CART</v-btn
             >
+            </div>
           </div>
         </div>
       </div>
-          <!-- <div v-for="item in product.productAttributes" :key="item.id">
-            <p class="title">{{ item.name }}</p>
-            <span>{{ item.value }}</span>
-          </div> -->
+
       <div class="row">
         <div class="col-sm-12 col-xs-12 col-md-12">
           <v-card-text class="pa-0 pt-4 mt-15" tile outlined>
@@ -130,30 +132,12 @@
   </div>
 </template>
 <script>
-import translate from '../util/genTable/multilanguageHelper.js'
+import translate from "../util/genTable/multilanguageHelper.js";
 
 export default {
   data() {
     return {
       rating: 4.5,
-      breadcrums: [
-        {
-          text: "Home",
-          disabled: false,
-          href: "breadcrumbs_home",
-        },
-        {
-          text: "Clothing",
-          disabled: false,
-          href: "breadcrumbs_clothing",
-        },
-        {
-          text: "T-Shirts",
-          disabled: true,
-          href: "breadcrumbs_shirts",
-        },
-      ],
-      item: 5,
       items: [
         {
           avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
@@ -202,26 +186,37 @@ export default {
   methods: {
     addToCart(productId) {
       var self = this;
-      this.$http.post("cartitems", {
-        productId
-      })
-      .then(response => {
-        console.log(response)
-        this.showServerResponse = true;
-        this.serverResponse = translate("You have successfully added the product to your cart", "cart")
-        this.responseType = "success"
-      })
-      .catch(err => {
-        console.log(err)
-        this.showServerResponse = true;
-        this.serverResponse = translate("Product is already in cart", "cart")
-        this.responseType = "error"
-      })
+      this.$http
+        .post("cartitems", {
+          productId,
+        })
+        .then((response) => {
+          console.log(response);
+          this.showServerResponse = true;
+          this.serverResponse = translate(
+            "You have successfully added the product to your cart",
+            "cart"
+          );
+          this.responseType = "success";
+        })
+        .catch((err) => {
+          console.log(err);
+          let errStatus = err.response.status;
+          this.showServerResponse = true;
+          this.serverResponse =
+            errStatus === 422
+              ? translate("Product is already in cart", "cart")
+              : translate(
+                  "You have to be logged in to be able to add products to cart",
+                  "cart"
+                );
+          this.responseType = "error";
+        });
 
       setTimeout(function () {
-        self.showServerResponse = false
-      }, 2000)
-    }
+        self.showServerResponse = false;
+      }, 2000);
+    },
   },
   beforeCreate: function () {
     this.$http
@@ -247,12 +242,12 @@ export default {
 </script>
 
 <style>
-  .specs-header{
-    margin-left: 15px;
-    margin-top: 50px;
-  }
+.specs-header {
+  margin-left: 15px;
+  margin-top: 50px;
+}
 
-  table{
-    margin: 0px 0px 30px;
-  }
+table {
+  margin: 0px 0px 30px;
+}
 </style>

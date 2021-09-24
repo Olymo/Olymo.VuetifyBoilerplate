@@ -26,13 +26,14 @@
             "
             style="height: 100%"
           >
-            <v-btn v-if="hover" href="#" class="" outlined>
-              <router-link
-                :to="{ name: 'product', params: { id: id } }"
-                style="text-decoration: none"
-                >View
-              </router-link>
-            </v-btn>
+            <router-link
+              :to="{ name: 'product', params: { id: id } }"
+              style="text-decoration: none"
+            >
+              <v-btn v-if="hover"  class="primary--text" outlined>
+                View
+              </v-btn>
+            </router-link>
           </div>
         </v-expand-transition>
       </v-img>

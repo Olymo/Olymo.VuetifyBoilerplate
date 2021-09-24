@@ -73,7 +73,8 @@
     "Order Summary": "Pregled porudžbine",
     "Shipping and additional costs are calculated based on values you have entered": "Dostava i ostali troškovi se računaju na osnovu vrednosti koje ste izabrali",
     "You have successfully added the product to your cart": "Uspešno ste dodali proizvod u korpu.",
-    "Product is already in cart": "Proizvod je već dodat u korpu."
+    "Product is already in cart": "Proizvod je već dodat u korpu.",
+    "You have to be logged in to be able to add products to cart": "Morate biti ulogovani kako bi dodali proizvod u korpu."
   },
   "slider": {
     "Sale up to 40% + Extra 10%": "Popusti do 40% + Dodatnih 10%",
