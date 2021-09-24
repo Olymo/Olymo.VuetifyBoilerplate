@@ -61,10 +61,11 @@
                                 hint="At least 5 characters"
                                 :error-messages="errors"
                                 label="Password"
-                                required
                                 @click:append="showPassword = !showPassword"
                             ></v-text-field>
                             </validation-provider>
+
+                            <div v-if="showServerResponse" class="mb-6">{{ serverResponse }}</div>
                             
                             <v-btn
                             class="mr-4"
@@ -114,11 +115,36 @@ export default {
         password: '',
         showPassword: false,
         updateText: translate('Update', 'profile'),
-        profileSettings: translate('Profile Settings', 'profile')
+        profileSettings: translate('Profile Settings', 'profile'),
+        showServerResponse: false,
+        serverResponse: "",
     }),
     methods: {
       submit() {
         this.$refs.observer.validate();
+        
+        this.$http.put("users/updateProfile", {
+            name: this.name,
+            email: this.email,
+            username: this.username,
+            password: this.password
+        })
+        .then(response => {
+            console.log(response);
+
+            this.showServerResponse = true;
+            this.serverResponse = translate("You have successfully update your profile", "profile")
+
+        })
+        .catch(err => {
+            let errObj = {};
+            for (const el of err.response.data.errors) {
+                let key = el.PropertyName.toLowerCase();
+                errObj[key] = el.Error
+            }
+
+            this.$refs.observer.setErrors(errObj);
+        })
       }
     },
     beforeCreate: function() {

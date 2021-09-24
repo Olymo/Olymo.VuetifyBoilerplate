@@ -64,6 +64,15 @@
                 ><v-icon>mdi-cart</v-icon> ADD TO CART</v-btn
               >
             </div>
+
+            <v-row>
+              <v-col md="6">
+                <v-alert v-if="showServerResponse" dense :type="responseType" md="3">{{ serverResponse }}</v-alert>
+              </v-col>
+            </v-row>
+            <v-btn class="primary white--text" outlined tile dense @click="addToCart(product.id)"
+              ><v-icon>mdi-cart</v-icon> ADD TO CART</v-btn
+            >
           </div>
         </div>
       </div>
@@ -180,12 +189,39 @@ export default {
       ],
       latestProducts: [],
       product: [],
+      serverResponse: "Test teksta sad dsad asd",
+      showServerResponse: false,
+      responseType: "info",
     };
   },
   computed: {
     baseUrl: function () {
       return process.env.VUE_APP_BACKEND_DOMAIN;
     },
+  },
+  methods: {
+    addToCart(productId) {
+      var self = this;
+      this.$http.post("cartitems", {
+        productId
+      })
+      .then(response => {
+        console.log(response)
+        this.showServerResponse = true;
+        this.serverResponse = translate("You have successfully added the product to your cart", "cart")
+        this.responseType = "success"
+      })
+      .catch(err => {
+        console.log(err)
+        this.showServerResponse = true;
+        this.serverResponse = translate("Product is already in cart", "cart")
+        this.responseType = "error"
+      })
+
+      setTimeout(function () {
+        self.showServerResponse = false
+      }, 2000)
+    }
   },
   beforeCreate: function () {
     this.$http
