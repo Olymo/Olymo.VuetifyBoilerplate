@@ -11,7 +11,7 @@
           class="white--text"
           style="text-decoration: none"
           @click="() => $router.push({ name: 'home' })"
-          ><v-icon>mdi-truck</v-icon>&nbsp; Boilerplate</a
+          ><v-icon>mdi-compass-rose</v-icon>&nbsp; <span id="template-title"> Boilerplate Template</span> </a
         >
       </v-toolbar-title>
 
@@ -154,7 +154,7 @@
         <v-divider></v-divider>
 
         <v-card-text class="white--text">
-          {{ this.currentYear }} — <strong> Boilerplate Template </strong>
+          Copyright © {{ this.currentYear }}<strong> Boilerplate Template </strong>
         </v-card-text>
       </v-card>
     </v-footer>
@@ -187,7 +187,7 @@ export default {
   },
   computed: {
     currentYear() {
-      return new Date().getFullYear() + ".";
+      return new Date().getFullYear();
     },
     mainNavigation() {
       return navigation.mainNavigation;
@@ -230,5 +230,16 @@ export default {
 <style>
 .padding-bottom {
   padding-bottom: 100px;
+}
+footer{
+  margin-top: 100px;
+}
+
+#template-title{
+  margin-top: 5px;
+}
+
+.mdi-compass-rose{
+  margin: 0px 3px 3px 0px;
 }
 </style>

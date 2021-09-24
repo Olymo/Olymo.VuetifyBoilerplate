@@ -102,7 +102,7 @@
               <v-col class="col-12 col-sm-3 pr-4" align="right">
                 <v-icon class="display-2">mdi-truck</v-icon>
               </v-col>
-              <v-col class="col-12 col-sm-9 pr-4">
+              <v-col class="col-12 col-sm-9 pr-4 content-info">
                 <h3 class="font-weight-light">{{ text.shippingText }}</h3>
               </v-col>
             </v-row>
@@ -112,7 +112,7 @@
               <v-col class="col-12 col-sm-3 pr-4" align="right">
                 <v-icon class="display-2">mdi-cash</v-icon>
               </v-col>
-              <v-col class="col-12 col-sm-9 pr-4">
+              <v-col class="col-12 col-sm-9 pr-4 content-info">
                 <h3 class="font-weight-light">{{ text.moneyText }}</h3>
               </v-col>
             </v-row>
@@ -122,7 +122,7 @@
               <v-col class="col-12 col-sm-3 pr-4" align="right">
                 <v-icon class="display-2">mdi-headset</v-icon>
               </v-col>
-              <v-col class="col-12 col-sm-9 pr-4">
+              <v-col class="col-12 col-sm-9 pr-4 content-info">
                 <h3 class="font-weight-light">{{ text.supportText }}</h3>
               </v-col>
             </v-row>
@@ -207,4 +207,16 @@ export default {
   position: absolute;
   width: 100%;
 }
+.accent {
+  padding: 30px 0px;
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.content-info{
+  display: flex;
+  align-items: center;
+}
+
 </style>

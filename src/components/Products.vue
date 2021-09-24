@@ -176,4 +176,7 @@ export default {
   position: absolute;
   width: 100%;
 }
+.v-treeview-node__label:hover{
+  cursor: pointer;
+}
 </style>

@@ -8,7 +8,7 @@
         class="elevation-1 my-5"
       >
         <template v-if="canUpdateOrder" v-slot:[`item.orderStatus`]="{ item }">
-          <v-row align="center" class="d-flex flex-row">
+          <v-row align="center" class="d-flex flex-row justify-between">
             <span class="mr-5" :id="'orderStatusText' + item.id">{{ orderStatusses[item.orderStatus].text }}</span>
             <v-col md="5">
               <v-select
@@ -128,4 +128,7 @@ export default {
   color: #000 !important;
 }
 
+.justify-between{
+  justify-content: space-between;
+}
 </style>
