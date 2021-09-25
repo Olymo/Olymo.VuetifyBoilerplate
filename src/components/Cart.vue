@@ -23,7 +23,7 @@
                    :key="index"
                 >
                   <v-list-item-avatar>
-                    <v-img :src="require('../assets/img/shop/1.jpg')"></v-img>
+                    <v-img :src="baseUrl + '/ProductImages/' + cartItem.image"></v-img>
                   </v-list-item-avatar>
 
                   <v-list-item-content>
@@ -125,6 +125,11 @@ export default {
       summaryText: translate("Shipping and additional costs are calculated based on values you have entered", "cart"),
     },
   }),
+  computed: {
+    baseUrl: function () {
+      return process.env.VUE_APP_BACKEND_DOMAIN;
+    },
+  },
   methods: {
       updateQuantity(quantity, cartItem) {
         if(quantity > cartItem.totalAvailable) {

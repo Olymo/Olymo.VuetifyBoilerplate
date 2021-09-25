@@ -3,7 +3,13 @@
         <h1>Checkout</h1>
         <div class="row">
             <div class="col-md-6">
-                <div v-show="orderState" class="text-h6 py-3">{{ orderMessage }}</div>
+                <v-alert
+                  v-if="showServerResponse"
+                  dense
+                  :type="responseType"
+                  md="3"
+                  >{{ serverResponse }}</v-alert
+                >
                 <validation-observer
                 ref="observer"
                 v-slot="{ invalid }"
@@ -108,11 +114,13 @@ export default {
         email: '',
         phoneNumber: '',
         address: '',
-        orderMessage: translate("Success", "order"),
-        orderState: false,
+        showServerResponse: false,
+        responseType: "info",
+        serverResponse: "",
     }),
     methods: {
       submit() {
+        var self = this;
         this.$refs.observer.validate();
         
         httpClient.post('orders', {
@@ -122,13 +130,20 @@ export default {
           phoneNumber: this.phoneNumber
         })
         .then(response => {
-            // alert("Uspesan order");
-            this.orderState = true;
+          this.showServerResponse = true;
+          this.serverResponse = translate("Your order has been successfully received", "order")
+          this.responseType = "success";
+            
         })
         .catch(err => {
-          this.orderState = true;
-          this.orderMessage = translate("Failed", "order");
+          this.showServerResponse = true;
+          this.serverResponse = translate("Server error, try again in a few moments", "order");
+          this.responseType = "error"
         });
+
+        setTimeout(function () {
+          self.showServerResponse = false;
+        }, 2000);
       }
     },
     beforeCreate: function() {
