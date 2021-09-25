@@ -146,7 +146,7 @@ export default {
         },
         {
           imgPath: "slider1.jpg",
-          title: translate("New autumn collection", "slider"),
+          title: translate("New collection", "slider"),
         },
         {
           imgPath: "slider2.jpg",
