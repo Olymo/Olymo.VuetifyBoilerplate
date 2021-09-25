@@ -35,8 +35,8 @@
     "You need to activate your account first": "Morate prvo da aktivirate svoj nalog."
   },
   "order": {
-    "Success": "Vaša porudžbina je primljena!",
-    "Failed": "Došlo je do greške. Molimo pokušajte ponovo.",
+    "Your order has been successfully received": "Vaša porudžbina je primljena",
+    "Server error, try again in a few moments": "Došlo je do greške, molimo pokušajte ponovo.",
     "Change order status": "Promenite status porudžbine",
     "User name": "Ime korisnika",
     "Address": "Adresa",
@@ -78,8 +78,8 @@
   },
   "slider": {
     "Sale up to 40% + Extra 10%": "Popusti do 40% + Dodatnih 10%",
-    "New autumn collection": "Nova jesenja kolekcija",
-    "Earn a bonus with online shopping": "Ostvariti ponus uz online kupovinu"
+    "New collection": "Nova kolekcija",
+    "Earn a bonus with online shopping": "Ostvarite bonus uz online kupovinu"
   },
   "home": {
     "Watches": "Satovi",

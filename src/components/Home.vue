@@ -141,15 +141,15 @@ export default {
     return {
       sliderItems: [
         {
-          imgPath: "slider0.jpg",
+          imgPath: "newSlider0.jpg",
           title: translate("Sale up to 40% + Extra 10%", "slider"),
         },
         {
-          imgPath: "slider1.jpg",
-          title: translate("New autumn collection", "slider"),
+          imgPath: "newSlider1.jpg",
+          title: translate("New collection", "slider"),
         },
         {
-          imgPath: "slider2.jpg",
+          imgPath: "newSlider2.jpg",
           title: translate("Earn a bonus with online shopping", "slider"),
         },
       ],

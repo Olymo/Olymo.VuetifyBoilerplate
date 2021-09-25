@@ -71,7 +71,7 @@ export default {
             value: 3
         }
       ],
-      canUpdateOrder: getActorData().IsSuperAdmin || getActorData().AllowedUseCaseIds.includes("UpdateOrder"),
+      canUpdateOrder: getActorData().IsSuperAdmin || getActorData().AllowedUseCaseIds.includes("UpdateOrderStatus"),
       headers: [
         { text: translate("User name", "order"), value: 'userFullName' },
         { text: translate("Address", "order"), value: 'address' },
@@ -89,6 +89,8 @@ export default {
         this.orders = response.data;
       })
       .catch(err => console.log(err));
+
+      console.log(getActorData().AllowedUseCaseIds);
 
   },
   methods: {
